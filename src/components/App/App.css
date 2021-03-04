@@ -1,0 +1,14 @@
+.page {
+  margin: 0 auto;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  width: 100%;
+  min-width: 320px;
+  max-width: 1280px;
+  background-color:rgb(32, 32, 32);
+  color: white;
+  width: 100%;
+}
+
+* {
+  outline: green 1px solid;
+}

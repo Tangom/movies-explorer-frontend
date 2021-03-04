@@ -1,0 +1,44 @@
+.filter-checkbox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;    
+  margin: 27px 30px 27px 0;
+  font-family: "Inter", "Arial", "sans-serif";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 18px;
+ }
+
+.filter-checkbox__button {
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  vertical-align: middle;
+  appearance: none;
+  width: 34px;
+  height: 14px;
+  margin-left: 14px;
+  border-radius: 20px;
+  background: #2BE080 center left 2px url(../../images/radio.svg) no-repeat;
+}
+
+.filter-checkbox__button:checked {
+  background-position: center right 2px;
+}
+
+.filter-checkbox__button:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+@media all and (max-width: 500px) {
+  .filter-checkbox {
+      margin: 46px 0 0 0;
+      font-size: 11px;
+  }
+}
