@@ -1,7 +1,8 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import {Route, Switch, useLocation} from 'react-router-dom';
 import Main from '../Main/Main';
 import Header from '../Header/Header';
+import Navigation from '../Navigation/Navigation'
 import Footer from '../Footer/Footer';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
@@ -11,23 +12,63 @@ import PageNotFound from '../PageNotFound/PageNotFound';
 import moviesCards from '../../utils/moviesCards';
 
 function App() {
-  const [loggedIn, setLoggedIn] = React.useState(true);
+
+  const location = useLocation();
+  const [isNavVisible, setIsNavVisible] = React.useState(false);
+  const [isFootVisible, setIsFootVisible] = React.useState(false);
+  const [isNavOpen, setIsNavOpen] = React.useState(false);
+
+  function handleNavVisible() {
+    if (location.pathname === '/movies'
+      || location.pathname === '/saved-movies'
+      || location.pathname === '/profile') {
+      setIsNavVisible(false);
+    } else {
+      setIsNavVisible(true)
+    }
+    ;
+  }
+
+  function handleFootVisible() {
+    if (location.pathname === '/movies'
+      || location.pathname === '/saved-movies'
+      || location.pathname === '/') {
+      setIsFootVisible(true);
+    } else {
+      setIsFootVisible(false)
+    }
+    ;
+  }
+
+  React.useEffect(() => {
+    handleNavVisible();
+    handleFootVisible();
+  }, [location.pathname]);
+
+  function handleNavOpen() {
+    setIsNavOpen(true);
+  };
+
+  function handleNAvClose() {
+    setIsNavOpen(false);
+  }
 
   return (
     <div className="page">
-      { loggedIn && <Header /> }
+      <Header visible={isNavVisible} onNavOpen={handleNavOpen}/>
+      <Navigation visible={isNavVisible} navOpen={isNavOpen} navClose={handleNAvClose}/>
 
       <Switch>
         <Route exact path="/">
-          <Main />
+          <Main/>
         </Route>
 
         <Route path="/signup">
-          <Register />
+          <Register/>
         </Route>
-        
+
         <Route path="/signin">
-          <Login />
+          <Login/>
         </Route>
 
         <Route path="/profile">
@@ -43,11 +84,10 @@ function App() {
         </Route>
 
         <Route path="*">
-          <PageNotFound />
+          <PageNotFound/>
         </Route>
       </Switch>
-
-      { loggedIn && <Footer /> }
+      <Footer visible={isFootVisible}/>
     </div>
   );
 }

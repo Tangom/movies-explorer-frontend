@@ -7,7 +7,7 @@ function Movies({moviesCards}) {
     <section className="movies">
       <SearchForm/>
       <MoviesCardList cards={moviesCards}/>
-      {moviesCards.length>12 && <button className="movies__more">Ещё</button>}
+      {moviesCards.length > 12 && <button className="movies__more">Ещё</button>}
     </section>
   );
 }

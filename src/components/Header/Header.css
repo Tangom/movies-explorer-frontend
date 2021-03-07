@@ -1,272 +1,133 @@
 .header {
   min-height: 74px;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: space-between;
   padding: 18px 70px;
   box-sizing: border-box;
 }
 
-.logo {
+.header_visible {
+  display: flex;
+}
+
+.header__square:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.header__logo {
   height: 38px;
   width: 38px;
   object-fit: cover;
 }
 
-.header__container {
-  display: flex;
+.header__square {
+  margin: 0 0 40px 0;
 }
 
-.header__auth {
-  display: flex;
-  align-items: center;
-}
-
-.header__menu {
-  display: flex;
-  align-items: center;
-}
-
-.header__menu-item {
-  font-weight: 500;
-  font-size: 13px;
-  font-style: normal;
-  line-height: 1.38;
-  margin-right: 15px;
-  margin-left: 5px;
-  text-decoration: none;
-  color: #FFF;
-}
-
-.header__menu-item:hover {
-  opacity: .7;
-}
-
-.header__menu-item_active {
-  text-decoration: underline;
-}
-
-.header__menu_hidden {
+.header__button-list {
+  margin: 0;
   display: none;
-}
-
-.header__signup {
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 1.33;
-  margin-right: 30px;
-  text-decoration: none;
-  color: #fff;
-}
-
-.header__signup:hover {
-  opacity: .8;
-}
-
-.header__signin {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 1.33;
-  color: rgb(0, 0, 0);;
-  background-color:rgb(61, 220, 132);
-  border: none;
-  outline: none;
+  flex-direction: row;
+  list-style-type: none;
   padding: 0;
-  min-width: 76px;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.header__button-list_display {
+  display: flex;
+}
+
+.header__button-signin {
+  width: 76px;
   height: 32px;
   border-radius: 3px;
-  margin-right: 30px;
-  text-decoration: none;
+  background-color: #2BE080;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #000000;
+  margin-left: 30px;
+  text-decoration: none;
+}
+
+.header__button-signin:hover {
   cursor: pointer;
+  opacity: 0.8;
 }
 
-.header__signin:hover {
-  opacity: .8;  
-}
-
-.header__profile {
-  min-width: 100px;
+.header__button-signup {
   height: 32px;
-  box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.08);
-  border-radius: 40px;
-  border: none;
-  outline: none;
-   margin-left: 730px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 3px;
-  box-sizing: border-box;
+  justify-content: center;
+  text-align: right;
+  color: #FFFFFF;
   text-decoration: none;
 }
 
-.header__profile:hover {
-  box-shadow: 0px 3px 14px rgba(0, 0, 0, .2);
+.header__button-signup:hover {
+  cursor: pointer;
+  opacity: 0.7;
 }
 
-.header__profile-text {
-  margin: 0px;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 16px;
-  padding-right: 14px;
-  color:rgb(255, 255, 255)
-}
-
-.header__profile-img {
-  width: 26px;
-  height: 26px;
-  padding: 8px 7px;
-  background-color: rgb(49, 49, 49);
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-.header__open-menu {
-  display: none;
-  align-items: center;
-  justify-content: center;
+.header__nav-button {
+  background: url(../../images/hamburger.svg) no-repeat;
+  padding: 8px;
   width: 44px;
   height: 44px;
-  z-index: 0;
-}
-
-.header__line {
-  height: 3px;
-  width: 28px;
-  background-color: #202020;
-  position: relative;
+  margin: 15px 30px 0 0;
+  border: none;
+  outline: none;
+  font: inherit;
+  color: inherit;
+  background-color: inherit;
   display: none;
+  text-align: start;
 }
 
-.header__line:before {
-  content: '';
-  height: 3px;
-  width: 28px;
-  position: absolute;
-  background-color: #202020;
-  top: 10px;
+.header__nav-button:hover {
+  cursor: pointer;
+  opacity: 0.7;
 }
 
-.header__line:after {
-  content: '';
-  height: 3px;
-  width: 28px;
-  background-color: #202020;
-  position: absolute;
-  top: -10px;
-}
-
-.header__close-menu {
-  width: 30px;
-  height: 30px;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 30px;
-  right: 30px;
-}
-
-.header__cross {
-  position: absolute;
-  height: 3px;
-  width: 22px;
-  transform: rotate(45deg);
-  background-color: #fff;
-}
-
-.header__cross::after {
-  position: absolute;
-  content: '';
-  height: 3px;
-  width: 22px;
-  transform: rotate(90deg);
-  background-color: #fff;
-}
-
-@media (max-width: 1279px) {
-  .header {
-    padding: 18px 30px;
-    
-  }
-  .header__cover {
-    display: block;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background-color: rgba(0,0,0,.3);
-    z-index: 2;
-    visibility: visible;
-    opacity: 1;
-    transition: visibility .3s, opacity .3s linear;
-  }
-  
-  .header__menu {
-    position: fixed;
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
-    width: 520px;
-    top: 0;
-    right: 0;
-    background-color: #202020;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin: 0;
-    padding-top: 159px;
+@media all and (max-width: 1279px) {
+  .header__square {
+    margin-left: 30px;
   }
 
-  .header__menu-item {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 22px;
-    text-align: center;
-    padding: 14px;
+  .header__square {
+    margin-left: 0;
   }
 
-  .header__profile {
-    margin: 0;
-    position: absolute;
-    bottom: 90px;
-  }
-  
-  .header__open-menu {
-    display: flex;
-  }
-
-  .header__line {
+  .header__nav-button_display {
     display: block;
   }
 
-  .header__close-menu {
-    display: flex;
+  .header__button-list {
+    margin-right: 30px;
   }
 }
 
-@media (max-width: 767px) {
-  .header {
-    padding: 18px 30px;
-  }
-  
-  .header__menu {
-    max-width: 100%;
-    padding-top: 144px ;
+@media all and (max-width: 767px) {
+  .header__square_margin {
+    margin: 26px auto 30px auto;
   }
 
-  .header__menu-item {
-    padding: 12px;
+  .header__button-list {
+    font-size: 10px;
+    margin: 24px 14px 0 0;
   }
 
-  .header__profile {   
-    bottom: 46px;
+  .header__button-signin {
+    width: 54px;
+    height: 26px;
+    margin-left: 14px;
+  }
+
+  .header__button-signup {
+    height: 26px;
   }
 }

@@ -74,6 +74,7 @@
 .aboutme__link:hover {
   font-weight: 500;
 }
+
 .aboutme__photo {
   width: 270px;
   height: 327px;
@@ -85,18 +86,22 @@
   .aboutme {
     padding: 90px 50px 90px;
   }
+
   .aboutme__student {
     margin-right: 49px;
   }
+
   .aboutme__name {
     font-size: 40px;
     line-height: 1;
   }
+
   .aboutme__bio {
     font-size: 12px;
     line-height: 1.5;
     padding: 16px 0;
   }
+
   .aboutme__story {
     font-size: 12px;
     line-height: 1.5;
@@ -108,33 +113,40 @@
   .aboutme {
     padding: 70px 14px 70px;
   }
-  .aboutme__container {    
+
+  .aboutme__container {
     flex-direction: column-reverse;
     align-items: center;
     padding: 60px 0 0;
   }
+
   .aboutme__student {
     margin-right: 0;
   }
+
   .aboutme__name {
     font-size: 30px;
     line-height: 36px;
     padding-top: 40px;
   }
+
   .aboutme__bio {
     font-size: 11px;
     line-height: 1.45;
     padding: 20px 0;
   }
+
   .aboutme__story {
     font-size: 11px;
     line-height: 1.45;
     padding: 0;
   }
+
   .aboutme__photo {
     width: 292px;
     height: 352px;
   }
+
   .aboutme__links {
     margin-top: 40px;
   }

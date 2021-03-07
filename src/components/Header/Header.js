@@ -1,41 +1,77 @@
 import React from 'react';
 import logo from '../../images/logo.svg';
-import profile from '../../images/profile.svg'
-import { NavLink } from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 
-function Header() {
-    
-   const [loggedIn, setLoggedIn] = React.useState(false);
+function Header(props) {
 
-  return(
-    <header className="header">
-      <NavLink to="/" className="logo"><img src={logo} alt="Логотип"/></NavLink>
+  const location = useLocation();
+  const [headerType, isHeaderType] = React.useState({
+    headerVisible: false,
+    buttonVisible: false,
+  });
 
-      <div className="header__container"> 
-              {loggedIn && (<nav className="header__auth ">
-          <NavLink to="/signup" className="header__signup" >Регистрация</NavLink>
-          <NavLink to="/signin" className="header__signin" >Войти</NavLink>
-              </nav>)}
-        <div className="header__cover">
-               {!loggedIn && ( <nav className="header__menu">
-            <NavLink to="/" className="header__menu-item" >Главная</NavLink>
-            <NavLink to="/movies" className="header__menu-item" activeClassName="header__menu-item_active">Фильмы</NavLink>
-            <NavLink to="/saved-movies" className="header__menu-item" activeClassName="header__menu-item_active" >Сохранённые фильмы</NavLink>
-            <NavLink to="/profile" className="header__profile">
-              <p className="header__profile-text">Аккаунт</p>
-              <img src={profile} alt="Аккаунт" className="header__profile-img"/>
-            </NavLink>
-            <div className="header__close-menu" >
-              <div className="header__cross"></div>
-            </div>
-              </nav>)}
-        </div>
-        {loggedIn && (<div className="header__open-menu" >
-          <div className="header__line"></div>
-        </div>)}
-        
-      </div>
-      
+  function handleHeaderType() {
+    if (location.pathname === '/') {
+      isHeaderType({
+        headerVisible: true,
+        buttonVisible: true,
+      });
+    }
+    if (location.pathname === '/movies'
+      || location.pathname === '/saved-movies') {
+      isHeaderType({
+        headerVisible: true,
+        buttonVisible: false,
+      });
+    } else {
+      if (location.pathname === '/signin'
+        || location.pathname === '/signup') {
+        isHeaderType({
+          headerVisible: false,
+          buttonVisible: false,
+        });
+      }
+      if (location.pathname === '/profile') {
+        isHeaderType({
+          headerVisible: true,
+          buttonVisible: false,
+        });
+      }
+    }
+  }
+
+  React.useEffect(() => {
+    handleHeaderType();
+  }, [location.pathname])
+
+  return (
+    <header className={`header  ${headerType.headerVisible ? 'header_visible' : ''}`}
+           >
+      <Link
+        to="/"
+        className="header__logo"
+      >
+        <img src={logo} alt="логотип"/>
+      </Link>
+      <button
+        className={`header__nav-button ${!props.visible ? 'header__nav-button_display' : ''}`}
+        onClick={props.onNavOpen}/>
+      <ul className={`header__button-list 
+          ${headerType.buttonVisible ? 'header__button-list_display' : ''}`}
+      >
+        <li>
+          <Link
+            to="/signup"
+            className="header__button-signup"
+          >Регистрация</Link>
+        </li>
+        <li>
+          <Link
+            to="/signin"
+            className="header__button-signin"
+          >Войти</Link>
+        </li>
+      </ul>
     </header>
   )
 }

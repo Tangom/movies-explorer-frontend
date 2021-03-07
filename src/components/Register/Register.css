@@ -17,6 +17,10 @@
   padding: 40px 0;
 }
 
+.register__logo {
+  height: 38px;
+  width: 38px;
+}
 
 @media (max-width: 1279px) {
   .register {

@@ -6,10 +6,10 @@ import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
 
 function Main() {
-  return(
+  return (
     <main className="content">
 
-      <Promo />
+      <Promo/>
 
       <AboutProject/>
 
@@ -17,9 +17,9 @@ function Main() {
 
       <AboutMe/>
 
-      <Portfolio />
-    
-  </main>
+      <Portfolio/>
+
+    </main>
   )
 }
 
