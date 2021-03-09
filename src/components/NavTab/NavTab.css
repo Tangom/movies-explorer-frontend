@@ -1,0 +1,29 @@
+.nav {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  grid-gap: 10px;
+  position: absolute;
+  bottom: 30px;
+}
+
+.nav__item {
+
+}
+
+.nav__link {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  padding: 10px 17px;
+  color:rgb(255, 255, 255);
+  background-color:rgb(48, 48, 48);
+  border-radius: 10px;
+  text-decoration: none;
+}
+
+.nav__link:hover {
+  background-color: rgba(48, 48, 48, 0.8);
+}
