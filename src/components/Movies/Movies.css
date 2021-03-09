@@ -5,7 +5,7 @@
     box-sizing: border-box;
     width: 100%;
     max-width: 1280px;
-    padding: 70px 70px 80px;
+    padding: 70px 0 80px;
   }
   .movies__more {
     font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;

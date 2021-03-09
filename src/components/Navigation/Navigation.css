@@ -61,12 +61,11 @@
     font-size: 14px;
     line-height: 16px;
     min-width: 100px;
-    height: 32px;
-    margin-left: 730px;
+    height: 30px;
+    padding-right: 70px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 3px 0;
     box-sizing: border-box;
     text-decoration: none;
     color: #FFF;
@@ -74,8 +73,8 @@
 
 .navigation__button-accaunt-circle {
     margin: 0px;
-    padding: 0 70px 0 14px;
-  }
+    padding-left: 14px;
+}
 
 .navigation-logo {
     width: 26px;
@@ -100,7 +99,7 @@
     display: flex;
 }
 
-@media all and (max-width: 1279px) {
+@media all and (max-width: 1190px) {
 
     .navigation {
         z-index: 2;
@@ -150,11 +149,11 @@
 
     .navigation__button-accaunt-circle {
         padding: 0 0 0 14px;
-      }
+    }
 
     .navigation__button_boild {
         margin-right: 0;
-        
+
     }
 
     .navigation_none {

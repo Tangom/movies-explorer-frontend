@@ -36,7 +36,7 @@
   opacity: 0.8;
 }
 
-@media all and (max-width: 500px) {
+@media all and (max-width: 767px) {
   .filter-checkbox {
       margin: 46px 0 0 0;
       font-size: 11px;
