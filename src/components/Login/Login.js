@@ -11,6 +11,35 @@ function Login({onLogin}) {
     password: '',
   });
 
+  const [inputError, setInputError] = React.useState({
+    email: true,
+    password: true,
+  });
+
+  const [isValid, setIsValid] = React.useState(true);
+
+  React.useEffect(() => {
+    if (
+      !inputError.email &&
+      !inputError.password
+    ) {
+      setIsValid(false)
+    } else {
+      setIsValid(true)
+    }
+  }, [inputError]);
+
+  function handlerEmail(evt) {
+    setInputValue({ ...inputValue, email: evt.target.value })
+    const reg = /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i
+    setInputError({ ...inputError, email: !reg.test(evt.target.value) })
+  };
+
+  function handlerPassword(evt) {
+    setInputValue({ ...inputValue, password: evt.target.value })
+    setInputError({ ...inputError, password: evt.target.value.length < 8 })
+  };
+
   function onSubmit(evt) {
     evt.preventDefault();
     onLogin(inputValue);
@@ -20,18 +49,6 @@ function Login({onLogin}) {
     })
   };
 
-  function onChange(evt) {
-    const {name, value} = evt.target;
-    setInputValue({
-      ...inputValue,
-      [name]: value
-    });
-  }
-
-  function disabledButton(evt) {
-    evt.preventDefault();
-    onLogin(inputValue);
-  }
 
   return (
     <section className="login">
@@ -45,7 +62,7 @@ function Login({onLogin}) {
         linkButton="Регистрация"
         link="/signup"
         onSubmit={onSubmit}
-        disabledButton={disabledButton}
+        disabledButton={isValid}
       >
 
         <Input
@@ -53,7 +70,11 @@ function Login({onLogin}) {
           placeholder="Email"
           min="6"
           max="40"
-          onChange={onChange}
+          onChange={(evt) => {
+            handlerEmail(evt)
+          }}
+          error={inputError.email}
+          value={inputValue.email}
         />
 
         <Input
@@ -61,7 +82,11 @@ function Login({onLogin}) {
           placeholder="Пароль"
           min="8"
           max=""
-          onChange={onChange}
+          onChange={(evt) => {
+            handlerPassword(evt)
+          }}
+          error={inputError.password}
+          value={inputValue.password}
         />
 
       </Confirmation>
