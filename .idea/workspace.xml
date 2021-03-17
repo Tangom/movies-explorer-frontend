@@ -51,7 +51,17 @@
       <recent name="C:\Users\User\dev\movies-explorer-frontend\src\components\ProtectedRoute" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="npm.start">
+    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -62,8 +72,20 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="test" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="test" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.build" />
+        <item itemvalue="npm.test" />
         <item itemvalue="npm.start" />
       </list>
     </recent_temporary>
@@ -88,7 +110,7 @@
       <workItem from="1615749278510" duration="3606000" />
       <workItem from="1615794105955" duration="12460000" />
       <workItem from="1615818354836" duration="29240000" />
-      <workItem from="1615962673080" duration="17103000" />
+      <workItem from="1615962673080" duration="17610000" />
     </task>
     <servers />
   </component>
