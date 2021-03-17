@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Switch, useLocation} from 'react-router-dom';
+import {Route, Switch, useLocation, useHistory} from 'react-router-dom';
 import Main from '../Main/Main';
 import Header from '../Header/Header';
 import Navigation from '../Navigation/Navigation'
@@ -9,7 +9,9 @@ import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
 import Movies from '../Movies/Movies';
 import PageNotFound from '../PageNotFound/PageNotFound';
-import moviesCards from '../../utils/moviesCards';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import mainApi from '../../utils/MainApi';
+import moviesApi from '../../utils/MoviesApi';
 
 function App() {
 
@@ -17,6 +19,95 @@ function App() {
   const [isNavVisible, setIsNavVisible] = React.useState(false);
   const [isFootVisible, setIsFootVisible] = React.useState(false);
   const [isNavOpen, setIsNavOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      mainApi.checkToken(token)
+        .then((res) => {
+          if (res) {
+            setLoggedIn(true);
+            getCurrentUser();
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          localStorage.removeItem('token')
+          history.push('/');
+        });
+    }
+  }, []);
+
+  function onSubmitRegister({name, email, password}) {
+    if (!name || !email || !password) {
+      return;
+    }
+    mainApi.register(name, email, password)
+      .then((res) => {
+        if (res) {
+          login(email, password);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
+  //авторизация
+  function login(email, password) {
+    mainApi.login(email, password)
+      .then((res) => {
+        if (res.token) {
+          localStorage.setItem('token', res.token);
+          setLoggedIn(true);
+          getCurrentUser();
+          history.push('/movies');
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
+  function onSubmitLogin({email, password}) {
+    if (!email || !password) {
+      return;
+    }
+    login(email, password);
+  }
+
+  // получить данные текущего пользователя
+  function getCurrentUser() {
+    const token = localStorage.getItem('token');
+    mainApi.getCurrentUser(token)
+      .then((res) => {
+        if (res) {
+          setCurrentUser(res)
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  // редактирование профиля
+  function handleSaveProfile(data) {
+
+    mainApi.saveProfile(data)
+      .then((profile) => {
+        setCurrentUser(profile);
+      })
+      .catch((err) => console.log(err))
+  }
+
+  // выход
+  function handleSignOut() {
+    localStorage.removeItem('token');
+    setLoggedIn(false);
+    setCurrentUser({})
+    history.push('/');
+  }
+
 
   function handleNavVisible() {
     if (location.pathname === '/movies'
