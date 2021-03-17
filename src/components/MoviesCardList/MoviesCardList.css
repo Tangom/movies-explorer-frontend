@@ -7,6 +7,15 @@
   gap: 30px 24px;
 }
 
+.cards__not-found {
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+  font-size: 28px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 30px;
+  margin: auto;
+}
+
 @media screen and (max-width: 1190px) {
   .cards {
     grid-template-columns: 1fr 1fr;

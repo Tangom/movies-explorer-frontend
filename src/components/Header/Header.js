@@ -46,7 +46,7 @@ function Header(props) {
 
   return (
     <header className={`header  ${headerType.headerVisible ? 'header_visible' : ''}`}
-           >
+    >
       <Link
         to="/"
         className="header__logo"

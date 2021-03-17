@@ -18,6 +18,10 @@
     align-self: center;
   }
 
+.form__button_disabled {
+  background-color: #E8E8E8;
+}
+
   .form__button_register {
    margin-top: 128px;
   }
