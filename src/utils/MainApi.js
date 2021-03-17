@@ -120,10 +120,11 @@ class MainApi {
   }
   
   const mainApi = new MainApi({
-    url: 'http://api.tango.students.nomoredomains.icu',
+    url: 'https://api.tango.students.nomoredomains.icu',
     headers: {
       'Content-Type': 'application/json'
-    }
+    },
+    credentials: "include"
   })
   
   export default mainApi;
