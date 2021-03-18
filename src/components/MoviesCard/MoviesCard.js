@@ -3,7 +3,7 @@ import {useLocation} from "react-router";
 
 function MoviesCard({saveMoviesCards,onSaveMovie,moviesCard}) {
   const location = useLocation();
-  const {duration, image, trailer, nameRU} = moviesCard;
+  const {duration, image, trailer, nameRU, id} = moviesCard;
   const isSaveDefault = saveMoviesCards.some(i => i.id === moviesCard.id);
   const [isSave, setIsSave] = React.useState(isSaveDefault);
 
@@ -14,7 +14,7 @@ function MoviesCard({saveMoviesCards,onSaveMovie,moviesCard}) {
 
   // const handleClick = () => {
   //   if (!saved) {
-  //     onSaveMovieCard(data);
+  //     onSaveMovieCard(moviesCard);
   //   } else {
   //     deleteMovieCard(id);
   //   }

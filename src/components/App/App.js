@@ -279,7 +279,7 @@ function App() {
                           component={Movies}
                           onSaveMovie={savedMovie}
                           cards={moviesCards}
-                          turnOn={isLoading}
+                          isLoading={isLoading}
                           submitSearch={onSubmitSearch}
                           saveMoviesCards={savedMovies}
           />
@@ -289,7 +289,7 @@ function App() {
                           component={Movies}
                           onSaveMovie={savedMovie}
                           cards={filterSavedMovies}
-                          turnOn={isLoading}
+                          isLoading ={isLoading}
                           submitSearch={onSubmitSearchSaved}
                           saveMoviesCards={savedMovies}
           />
