@@ -30,14 +30,14 @@ function Login({onLogin}) {
   }, [inputError]);
 
   function handlerEmail(evt) {
-    setInputValue({ ...inputValue, email: evt.target.value })
+    setInputValue({...inputValue, email: evt.target.value})
     const reg = /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i
-    setInputError({ ...inputError, email: !reg.test(evt.target.value) })
+    setInputError({...inputError, email: !reg.test(evt.target.value)})
   };
 
   function handlerPassword(evt) {
-    setInputValue({ ...inputValue, password: evt.target.value })
-    setInputError({ ...inputError, password: evt.target.value.length < 8 })
+    setInputValue({...inputValue, password: evt.target.value})
+    setInputError({...inputError, password: evt.target.value.length < 8})
   };
 
   function onSubmit(evt) {

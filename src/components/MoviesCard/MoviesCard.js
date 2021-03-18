@@ -1,24 +1,17 @@
 import React from 'react';
 import {useLocation} from "react-router";
 
-function MoviesCard({saveMoviesCards,onSaveMovie,moviesCard}) {
+function MoviesCard({onSaveMovie, moviesCard, onBookmarkClick}) {
   const location = useLocation();
-  const {duration, image, trailer, nameRU, id} = moviesCard;
-  const isSaveDefault = saveMoviesCards.some(i => i.id === moviesCard.id);
-  const [isSave, setIsSave] = React.useState(isSaveDefault);
+  const {duration, image, trailer, nameRU} = moviesCard;
 
-  function handleClick() {
-    onSaveMovie(moviesCard);
-    setIsSave(!isSave);
-  };
+  let isSave = onSaveMovie(moviesCard);
 
-  // const handleClick = () => {
-  //   if (!saved) {
-  //     onSaveMovieCard(moviesCard);
-  //   } else {
-  //     deleteMovieCard(id);
-  //   }
-  // };
+  function handleClick(evt) {
+    evt.preventDefault();
+    onBookmarkClick(moviesCard, !isSave)
+  }
+
   return (
     <div className="movies-card">
       <div className="movies-card__content">

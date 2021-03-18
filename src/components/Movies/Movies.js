@@ -3,7 +3,7 @@ import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Preloader from '../Preloader/Preloader';
 
-function Movies({submitSearch, isLoading, cards, onSaveMovie, saveMoviesCards}) {
+function Movies({submitSearch, isLoading, cards, onSaveMovie, onBookmarkClick}) {
 
   const [shortFilm, setShortFilm] = React.useState(false);
 
@@ -22,8 +22,9 @@ function Movies({submitSearch, isLoading, cards, onSaveMovie, saveMoviesCards}) 
       <SearchForm onFilter={onFilter} submitSearch={submitSearch}/>
       {isLoading && <Preloader/>}
       <MoviesCardList
+        onBookmarkClick={onBookmarkClick}
         onSaveMovie={onSaveMovie}
-        saveMoviesCards={saveMoviesCards}
+
         moviesCard={shortFilm ? filterShortFilm(cards) : cards}/>
       {cards.length > 12 && <button className="movies__more">Ещё</button>}
     </section>

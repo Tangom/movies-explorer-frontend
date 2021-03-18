@@ -95,7 +95,7 @@ function App() {
       });
   }
 
-  function saveProfile(data) {
+    function saveProfile(data) {
     mainApi.saveProfile(data)
       .then((profile) => {
         setCurrentUser(profile);
@@ -157,20 +157,25 @@ function App() {
       });
   };
 
-  // const deleteMovieCard = (id) => {
-  //   const idMovie = savedMovies.find(item => item.id === id)._id;
-  //   setIsLoading(true);
-  //   mainApi.deleteMovies(idMovie)
-  //     .then(() => {
-  //       setSavedMovies(savedMovies.filter(item => item._id !== idMovie));
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     })
-  //     .finally(() => {
-  //       setIsLoading(false);
-  //     });
-  // };
+  React.useEffect(() => {
+    setFilterSavedMovies(filter(savedMovies, query));
+    localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
+  }, [savedMovies])
+
+  const deleteMovieCard = (movie) => {
+    const movieId  = savedMovies.find(item => item.id === movie.id)._id;
+    setIsLoading(true);
+    mainApi.deleteMovies(movieId)
+      .then(() => {
+        setSavedMovies(savedMovies.filter(item => item._id !== movieId));
+      })
+      .catch(err => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
   function filter(data, query) {
     if (query) {
@@ -223,6 +228,17 @@ function App() {
       })
   }
 
+  function onBookmarkClick(movie, isMarked) {
+
+    if (isMarked) {
+      savedMovie(movie);
+    } else {
+      deleteMovieCard(movie);
+    }
+  }
+  function onSaveMovie(movie) {
+    return savedMovies.some((item) => item.id === movie.id)
+  }
   function onSubmitSearch(query) {
     setIsLoading(true);
     setTimeout(() => {
@@ -277,21 +293,21 @@ function App() {
           <ProtectedRoute path="/movies"
                           loggedIn={loggedIn}
                           component={Movies}
-                          onSaveMovie={savedMovie}
+                          onSaveMovie={onSaveMovie}
                           cards={moviesCards}
                           isLoading={isLoading}
                           submitSearch={onSubmitSearch}
-                          saveMoviesCards={savedMovies}
+                          onBookmarkClick={onBookmarkClick}
           />
 
           <ProtectedRoute path="/saved-movies"
                           loggedIn={loggedIn}
                           component={Movies}
-                          onSaveMovie={savedMovie}
+                          onSaveMovie={onSaveMovie}
                           cards={filterSavedMovies}
                           isLoading ={isLoading}
                           submitSearch={onSubmitSearchSaved}
-                          saveMoviesCards={savedMovies}
+                          onBookmarkClick={onBookmarkClick}
           />
 
           <Route path="*">
