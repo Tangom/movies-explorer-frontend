@@ -1,16 +1,16 @@
 import MoviesCard from "../MoviesCard/MoviesCard";
 
-function MoviesCardList({cards, savedMovies, userMovie, deleteMovieCard}) {
+function MoviesCardList({cards, onSaveMovieCard, userMovie, deleteMovieCard}) {
   const cardElements = cards.slice(0, 12)
     .map((item) =>
       (<li key={item.id}>
         <MoviesCard
           data={item}
-          savedMovies={savedMovies}
-          isSavedMovie={userMovie.some(usersItem => usersItem.id === item.id)}
+          onSaveMovieCard={onSaveMovieCard}
+          saved={userMovie.some(item.id)}
           deleteMovieCard={deleteMovieCard}/>
       </li>));
-  return cardElements.length > 0 ?
+  return cards.length > 0 ?
     <ul className="cards">
       {cardElements}
     </ul>

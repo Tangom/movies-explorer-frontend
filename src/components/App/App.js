@@ -277,23 +277,23 @@ function App() {
           <ProtectedRoute path="/movies"
                           loggedIn={loggedIn}
                           component={Movies}
-                          savedMovies={false}
+                          onSaveMovieCard={savedMovie}
                           cards={moviesCards}
                           turnOn={isLoading}
                           submitSearch={onSubmitSearch}
                           deleteMovieCard={deleteMovieCard}
-                          isSavedMovie={savedMovie}
+                          userMovie={savedMovies}
           />
 
           <ProtectedRoute path="/saved-movies"
                           loggedIn={loggedIn}
                           component={Movies}
-                          savedMovies={true}
+                          onSaveMovieCard={savedMovie}
                           cards={filterSavedMovies}
                           turnOn={isLoading}
                           submitSearch={onSubmitSearchSaved}
                           deleteMovieCard={deleteMovieCard}
-                          isSavedMovie={savedMovie}
+                          userMovie={savedMovies}
           />
 
           <Route path="*">

@@ -1,11 +1,11 @@
 import {useLocation} from "react-router";
 
-function MoviesCard({data, savedMovies, isSavedMovie, deleteMovieCard}) {
+function MoviesCard({data, saved, onSaveMovieCard, deleteMovieCard}) {
   const {duration, image, trailer, nameRU, id} = data;
   const location = useLocation();
   const handleClick = () => {
-    if (!savedMovies) {
-      isSavedMovie(data);
+    if (!saved) {
+      onSaveMovieCard(data);
     } else {
       deleteMovieCard(id);
     }
