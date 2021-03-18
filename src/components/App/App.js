@@ -157,20 +157,20 @@ function App() {
       });
   };
 
-  const deleteMovieCard = (id) => {
-    const idMovie = savedMovies.find(item => item.id === id)._id;
-    setIsLoading(true);
-    mainApi.deleteMovies(idMovie)
-      .then(() => {
-        setSavedMovies(savedMovies.filter(item => item._id !== idMovie));
-      })
-      .catch(err => {
-        console.log(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
+  // const deleteMovieCard = (id) => {
+  //   const idMovie = savedMovies.find(item => item.id === id)._id;
+  //   setIsLoading(true);
+  //   mainApi.deleteMovies(idMovie)
+  //     .then(() => {
+  //       setSavedMovies(savedMovies.filter(item => item._id !== idMovie));
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     })
+  //     .finally(() => {
+  //       setIsLoading(false);
+  //     });
+  // };
 
   function filter(data, query) {
     if (query) {
@@ -277,23 +277,21 @@ function App() {
           <ProtectedRoute path="/movies"
                           loggedIn={loggedIn}
                           component={Movies}
-                          onSaveMovieCard={savedMovie}
+                          onSaveMovie={savedMovie}
                           cards={moviesCards}
                           turnOn={isLoading}
                           submitSearch={onSubmitSearch}
-                          deleteMovieCard={deleteMovieCard}
-                          userMovie={savedMovies}
+                          saveMoviesCards={savedMovies}
           />
 
           <ProtectedRoute path="/saved-movies"
                           loggedIn={loggedIn}
                           component={Movies}
-                          onSaveMovieCard={savedMovie}
+                          onSaveMovie={savedMovie}
                           cards={filterSavedMovies}
                           turnOn={isLoading}
                           submitSearch={onSubmitSearchSaved}
-                          deleteMovieCard={deleteMovieCard}
-                          userMovie={savedMovies}
+                          saveMoviesCards={savedMovies}
           />
 
           <Route path="*">
