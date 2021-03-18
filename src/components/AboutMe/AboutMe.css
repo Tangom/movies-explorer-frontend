@@ -1,0 +1,153 @@
+.aboutme {
+  padding: 110px 70px 100px;
+}
+
+.aboutme__container {
+  display: flex;
+  justify-content: space-between;
+  padding: 66px 0 0;
+}
+
+.aboutme__student {
+  margin-right: 270px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.aboutme__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.aboutme__name {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 50px;
+  line-height: 1.16;
+  letter-spacing: -0.04em;
+  margin: 0;
+  padding: 0;
+}
+
+.aboutme__bio {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.11;
+  mix-blend-mode: normal;
+  margin: 0;
+  padding: 18px 0;
+}
+
+.aboutme__story {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 1.57;
+  margin: 0;
+  padding: 8px 0;
+}
+
+.aboutme__links {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  justify-self: unset;
+  display: flex;
+}
+
+.aboutme__links-item {
+  margin-right: 20px;
+}
+
+.aboutme__link {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.aboutme__link:hover {
+  font-weight: 500;
+}
+
+.aboutme__photo {
+  width: 270px;
+  height: 327px;
+  border-radius: 10px;
+}
+
+
+@media (max-width: 1190px) {
+  .aboutme {
+    padding: 90px 50px 90px;
+  }
+
+  .aboutme__student {
+    margin-right: 49px;
+  }
+
+  .aboutme__name {
+    font-size: 40px;
+    line-height: 1;
+  }
+
+  .aboutme__bio {
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 16px 0;
+  }
+
+  .aboutme__story {
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 2px 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .aboutme {
+    padding: 70px 14px 70px;
+  }
+
+  .aboutme__container {
+    flex-direction: column-reverse;
+    align-items: center;
+    padding: 60px 0 0;
+  }
+
+  .aboutme__student {
+    margin-right: 0;
+  }
+
+  .aboutme__name {
+    font-size: 30px;
+    line-height: 36px;
+    padding-top: 40px;
+  }
+
+  .aboutme__bio {
+    font-size: 11px;
+    line-height: 1.45;
+    padding: 20px 0;
+  }
+
+  .aboutme__story {
+    font-size: 11px;
+    line-height: 1.45;
+    padding: 0;
+  }
+
+  .aboutme__photo {
+    width: 292px;
+    height: 352px;
+  }
+
+  .aboutme__links {
+    margin-top: 40px;
+  }
+}

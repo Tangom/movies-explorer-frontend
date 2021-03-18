@@ -1,0 +1,136 @@
+.header {
+  min-height: 74px;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 70px;
+  box-sizing: border-box;
+}
+
+.header_visible {
+  display: flex;
+}
+
+.header__square:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.header__logo {
+  height: 38px;
+  width: 38px;
+  object-fit: cover;
+}
+
+.header__square {
+  margin: 0 0 40px 0;
+}
+
+.header__button-list {
+  margin: 0;
+  display: none;
+  flex-direction: row;
+  list-style-type: none;
+  padding: 0;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.header__button-list_display {
+  display: flex;
+}
+
+.header__button-signin {
+  width: 76px;
+  height: 32px;
+  border-radius: 3px;
+  background-color: #2BE080;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000000;
+  margin-left: 30px;
+  text-decoration: none;
+}
+
+.header__button-signin:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.header__button-signup {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: right;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.header__button-signup:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.header__nav-button {
+  background: url(../../images/hamburger.svg) no-repeat;
+  width: 44px;
+  height: 44px;
+  border: none;
+  outline: none;
+  font: inherit;
+  color: inherit;
+  background-color: inherit;
+  display: none;
+  text-align: start;
+}
+
+.header__nav-button:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+@media all and (max-width: 1190px) {
+  .header {
+    padding: 18px 30px;
+ 
+  }
+
+  .header__square {
+    margin-left: 30px;
+  }
+
+  .header__square {
+    margin-left: 0;
+  }
+
+  .header__nav-button_display {
+    display: block;
+  }
+
+  .header__button-list {
+    margin-right: 10px;
+  }
+}
+
+@media all and (max-width: 767px) {
+  .header__square_margin {
+    margin: 26px auto 30px auto;
+  }
+
+  .header__button-list {
+    font-size: 10px;
+    margin: 0;
+  }
+
+  .header__button-signin {
+    width: 54px;
+    height: 26px;
+    margin-left: 14px;
+  }
+
+  .header__button-signup {
+    height: 26px;
+  }
+}
