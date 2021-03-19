@@ -239,6 +239,7 @@ function App() {
   function onSaveMovie(movie) {
     return savedMovies.some((item) => item.id === movie.id)
   }
+
   function onSubmitSearch(query) {
     setIsLoading(true);
     setTimeout(() => {
