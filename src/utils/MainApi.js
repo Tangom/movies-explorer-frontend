@@ -22,7 +22,6 @@ class MainApi {
       return this._getResponseData(fetch(`${this._url}/signup`, {  
           method: 'POST',
           headers: this._headers,
-          credentials: 'include',
           body: JSON.stringify(data)
         }))
     }
@@ -125,7 +124,6 @@ class MainApi {
     headers: {
       'Content-Type': 'application/json'
     },
-    credentials: 'include',
   })
   
   export default mainApi;
