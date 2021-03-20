@@ -123,11 +123,12 @@ class MainApi {
     url: 'https://api.tango.students.nomoredomains.icu',
     headers: {
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': '*',
-      'Access-Control-Allow-Headers': '*',
-      'Access-Control-Allow-Credentials': '*',
+      // 'Access-Control-Allow-Origin': '*',
+      // 'Access-Control-Allow-Methods': '*',
+      // 'Access-Control-Allow-Headers': '*',
+      // 'Access-Control-Allow-Credentials': '*',
     },
+    credentials:'include',
   })
   
   export default mainApi;
