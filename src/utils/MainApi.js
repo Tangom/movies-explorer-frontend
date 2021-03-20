@@ -122,7 +122,10 @@ class MainApi {
   const mainApi = new MainApi({
     url: 'https://api.tango.students.nomoredomains.icu',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': '*',
+      'Access-Control-Allow-Headers': '*',
     },
   })
   
