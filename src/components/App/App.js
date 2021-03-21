@@ -265,6 +265,21 @@ function App() {
     }
   }, [loggedIn])
 
+  React.useEffect(() => {
+    const initial = JSON.parse(localStorage.getItem('initialMovies'));
+    if (initial) {
+      setInitialMovies(initial);
+    } else {
+      getInitialMovies();
+    }
+    const saved = JSON.parse(localStorage.getItem('savedMovies'));
+    if (saved) {
+      setSavedMovies(saved)
+    } else {
+      getSavedMovies();
+    }
+  }, [])
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -295,7 +310,7 @@ function App() {
                           loggedIn={loggedIn}
                           component={Movies}
                           onSaveMovie={onSaveMovie}
-                          cards={moviesCards}
+                          moviesCard={moviesCards}
                           isLoading={isLoading}
                           submitSearch={onSubmitSearch}
                           onBookmarkClick={onBookmarkClick}
@@ -305,7 +320,7 @@ function App() {
                           loggedIn={loggedIn}
                           component={Movies}
                           onSaveMovie={onSaveMovie}
-                          cards={filterSavedMovies}
+                          moviesCard={filterSavedMovies}
                           isLoading ={isLoading}
                           submitSearch={onSubmitSearchSaved}
                           onBookmarkClick={onBookmarkClick}
