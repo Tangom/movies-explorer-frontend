@@ -3,13 +3,12 @@ import {useLocation} from "react-router";
 
 function MoviesCard({onSaveMovie, moviesCard, onBookmarkClick}) {
   const location = useLocation();
-  // const {duration, image, trailer, nameRU} = moviesCard;
 
   let isSave = onSaveMovie(moviesCard);
 
   function handleClick(evt) {
     evt.preventDefault();
-    onBookmarkClick(moviesCard, isSave)
+    onBookmarkClick(moviesCard, !isSave)
   }
 
   return (
