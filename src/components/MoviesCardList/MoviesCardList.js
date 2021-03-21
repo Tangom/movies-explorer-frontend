@@ -6,8 +6,7 @@ function MoviesCardList({moviesCard, onSaveMovie, onBookmarkClick}) {
       (<li key={item.id}>
         <MoviesCard
           onBookmarkClick={onBookmarkClick}
-          key={moviesCard.id}
-          moviesCard={moviesCard}
+          moviesCard={item}
           onSaveMovie={onSaveMovie}
         />
       </li>));
