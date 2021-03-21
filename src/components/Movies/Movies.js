@@ -11,8 +11,8 @@ function Movies({submitSearch, isLoading, moviesCard, onSaveMovie, onBookmarkCli
     setShortFilm(filterOn);
   }
 
-  function filterShortFilm(cards) {
-    return cards.filter((item) => {
+  function filterShortFilm(moviesCard) {
+    return moviesCard.filter((item) => {
       return item.duration < 40;
     })
   }

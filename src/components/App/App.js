@@ -32,6 +32,7 @@ function App() {
   const [query, setQuery] = React.useState('');
 
   React.useEffect(() => {
+    const path = location.pathname;
     const token = localStorage.getItem('token');
     if (token) {
       mainApi.checkToken(token)
@@ -39,6 +40,7 @@ function App() {
           if (res) {
             setLoggedIn(true);
             getCurrentUser();
+            history.push(path);
           }
         })
         .catch((err) => {
@@ -88,6 +90,7 @@ function App() {
       .then((res) => {
         if (res) {
           setCurrentUser(res)
+          localStorage.setItem('currentUser', JSON.stringify(res))
         }
       })
       .catch(err => {
@@ -105,8 +108,15 @@ function App() {
 
   function signOut() {
     localStorage.removeItem('token');
+    localStorage.removeItem('currentUser');
     setLoggedIn(false);
     setCurrentUser({})
+    localStorage.removeItem('initialMovies');
+    localStorage.removeItem('savedMovies');
+    setInitialMovies([]);
+    setSavedMovies([]);
+    setMoviesCards([]);
+    setFilterSavedMovies([]);
     history.push('/');
   }
 
@@ -166,8 +176,10 @@ function App() {
     const movieId  = savedMovies.find(item => item.id === movie.id)._id;
     setIsLoading(true);
     mainApi.deleteMovies(movieId)
-      .then(() => {
-        setSavedMovies(savedMovies.filter(item => item._id !== movieId));
+      .then((res) => {
+        if (res) {
+          setSavedMovies(savedMovies.filter(item => item.movieId!== res.movieId)._id);
+        }
       })
       .catch(err => {
         console.log(err);
