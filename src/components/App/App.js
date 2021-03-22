@@ -172,13 +172,15 @@ function App() {
     localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
   }, [savedMovies])
 
-  const deleteMovieCard = (movieId) => {
-    const id = savedMovies.find(item => item.movieId === movieId)._id;
+  const deleteMovieCard = (movie) => {
+    const movieId = savedMovies.find(item => item.id === movie.id)._id;
     setIsLoading(true);
-    mainApi.deleteMovies(id)
-      .then(() => {
-        setSavedMovies(savedMovies.filter(item => item._id !== id));
-      })
+    mainApi.deleteMovies(movieId)
+      .then((res) => {
+        if(res) {
+          setSavedMovies(savedMovies.filter(item => item.movieId!== res.movieId));
+        }
+        })
       .catch(err => {
         console.log(err);
       })
