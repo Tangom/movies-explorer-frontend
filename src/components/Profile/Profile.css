@@ -100,11 +100,7 @@
     color: #fff;
 }
 
-.profile__input_error {
-    color: #EE3465;
-}
-
-@media all and (max-width: 1190px) {    
+@media all and (max-width: 1190px) {
     .profile__title {
         margin: 236px 0 96px 0;
     }
