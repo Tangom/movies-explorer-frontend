@@ -17,7 +17,6 @@ function Profile(saveProfile, signOut) {
 
 
   const currentUser = React.useContext(CurrentUserContext);
-
   // React.useEffect(() => {
   //   setInputValue({
   //     ...inputValue,
