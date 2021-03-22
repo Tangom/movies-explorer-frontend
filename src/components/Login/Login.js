@@ -43,10 +43,10 @@ function Login({onLogin}) {
   function onSubmit(evt) {
     evt.preventDefault();
     onLogin(inputValue);
-    setInputValue({
-      email: '',
-      password: '',
-    })
+    // setInputValue({
+    //   email: '',
+    //   password: '',
+    // })
   };
 
 
