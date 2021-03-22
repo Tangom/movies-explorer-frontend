@@ -11,7 +11,7 @@ function MoviesCardList({moviesCard, onSaveMovie, deleteMovieCard, onBookmarkCli
           deleteMovieCard={deleteMovieCard}
         />
       </li>));
-  return moviesCard.length > 0 ?
+  return ((moviesCard && moviesCard.length) || 0)> 0 ?
     <ul className="cards">
       {cardElements}
     </ul>
