@@ -9,7 +9,7 @@ import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
 import Movies from '../Movies/Movies';
 import PageNotFound from '../PageNotFound/PageNotFound';
-import {CurrentUserContext} from '../../context/ CurrentUserContext';
+import {CurrentUserContext} from '../../context/CurrentUserContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import mainApi from '../../utils/MainApi';
 import moviesApi from '../../utils/MoviesApi';
