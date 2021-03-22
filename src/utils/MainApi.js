@@ -108,16 +108,16 @@ class MainApi {
         image: data.image,
         trailer: data.trailer,
         thumbnail: data.image,
-        id: data.id,
+        movieId: data.id,
         nameRU: data.nameRU,
         nameEN: data.nameEN,
       })
     }))
   }
 
-  deleteMovies(id) {
+  deleteMovies(movieId) {
     const token = localStorage.getItem('token');
-    return this._getResponseData(fetch(`${this._url}/movies/${id}`, {
+    return this._getResponseData(fetch(`${this._url}/movies/${movieId}`, {
       method: 'DELETE',
       headers: {
         ...this._headers,

@@ -157,7 +157,7 @@ function App() {
     setIsLoading(true);
     mainApi.createMovie(data)
       .then((res) => {
-        setSavedMovies([...savedMovies, {...res, id: res.id}])
+        setSavedMovies([...savedMovies, {...res, id: res.movieId}])
       })
       .catch(err => {
         console.log(err);
@@ -178,7 +178,7 @@ function App() {
     mainApi.deleteMovies(movieId)
       .then((res) => {
         if (res) {
-          setSavedMovies(savedMovies.filter(item => item.movieId!== res.movieId)._id);
+          setSavedMovies(savedMovies.filter(item => item.movieId!== res.movieId));
         }
       })
       .catch(err => {
