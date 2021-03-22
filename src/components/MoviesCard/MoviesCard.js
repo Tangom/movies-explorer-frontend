@@ -8,7 +8,16 @@ function MoviesCard({onSaveMovie, moviesCard, onBookmarkClick}) {
 
   function handleClick(evt) {
     evt.preventDefault();
-    onBookmarkClick(moviesCard, !isSave)
+    location.pathname === "/saved-movies" ?
+      onBookmarkClick(moviesCard, false)
+      : onBookmarkClick(moviesCard, !isSave);
+  }
+
+
+  function duration(duration) {
+    const hh = Math.trunc(duration / 60)
+    const mm = duration % 60;
+    return `${hh>0 ? hh+'ч ' : ''}${mm}м`
   }
 
   return (
@@ -16,7 +25,7 @@ function MoviesCard({onSaveMovie, moviesCard, onBookmarkClick}) {
       <div className="movies-card__content">
         <div className="movies-card__description">
           <h2 className="movies-card__title">{moviesCard.nameRU}</h2>
-          <p className="movies-card__duration">{moviesCard.duration}</p>
+          <p className="movies-card__duration">{duration(moviesCard.duration)}</p>
         </div>
         <button
           className={`movies-card__button ${(location.pathname === "/saved-movies" ? "movies-card__button_delete" : "")}`}
