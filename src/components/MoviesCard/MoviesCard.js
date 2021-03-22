@@ -1,7 +1,7 @@
 import React from 'react';
 import {useLocation} from "react-router";
 
-function MoviesCard({onSaveMovie, moviesCard, onBookmarkClick}) {
+function MoviesCard({onSaveMovie, moviesCard, deleteMovieCard, onBookmarkClick}) {
   const location = useLocation();
 
   let isSave = onSaveMovie(moviesCard);
@@ -12,7 +12,7 @@ function MoviesCard({onSaveMovie, moviesCard, onBookmarkClick}) {
   }
 
   function handleOnDelete() {
-    onBookmarkClick(moviesCard, false);
+    deleteMovieCard(moviesCard.movieId);
   }
 
   function duration(duration) {
