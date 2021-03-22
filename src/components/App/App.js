@@ -229,7 +229,7 @@ function App() {
     mainApi.getMovies()
       .then((data) => {
         const savedArray = data.map((item) => {
-          return {...item, id: item.id}
+          return {...item, id: item.movieId}
         })
         localStorage.setItem('savedMovies', JSON.stringify(savedArray));
         setSavedMovies(savedArray);

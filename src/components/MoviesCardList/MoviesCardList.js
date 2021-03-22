@@ -3,7 +3,7 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 function MoviesCardList({moviesCard, onSaveMovie, onBookmarkClick}) {
   const cardElements = moviesCard.slice(0, 12)
     .map((item) =>
-      (<li key={item.movieId}>
+      (<li key={item.id}>
         <MoviesCard
           onBookmarkClick={onBookmarkClick}
           moviesCard={item}
