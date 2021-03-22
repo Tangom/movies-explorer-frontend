@@ -39,7 +39,6 @@ function Profile(saveProfile, signOut) {
     setInputError({...inputError, name: evt.target.value.length < 2})
   };
 
-
   function handleEmail(evt) {
     setInputValue({...inputValue, email: evt.target.value})
     const eml = /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i
