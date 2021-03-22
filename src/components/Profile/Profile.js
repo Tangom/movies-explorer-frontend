@@ -43,14 +43,16 @@ function Profile(saveProfile, signOut) {
   }
 
   function handleName(evt) {
-    setInputValue({...inputValue, name: evt.target.value})
-    setInputError({...inputError, name: evt.target.value.length < 2})
+    const { name, value } = evt.target;
+    setInputValue({...inputValue, [name]: value})
+    setInputError({...inputError, [name]: value.length < 2})
   };
 
   function handleEmail(evt) {
-    setInputValue({...inputValue, email: evt.target.value})
+    const { email, value } = evt.target;
+    setInputValue({...inputValue, [email]: value})
     const eml = /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i
-    setInputError({...inputError, email: !eml.test(evt.target.value)})
+    setInputError({...inputError, [email]: !eml.test(value)})
   };
 
   React.useEffect(() => {
