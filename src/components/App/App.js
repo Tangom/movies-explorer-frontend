@@ -98,7 +98,7 @@ function App() {
       });
   }
 
-    function saveProfile(data) {
+  function saveProfile(data) {
     mainApi.saveProfile(data)
       .then((profile) => {
         setCurrentUser(profile);
@@ -172,14 +172,12 @@ function App() {
     localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
   }, [savedMovies])
 
-  const deleteMovieCard = (movie) => {
-    const movieId  = savedMovies.find(item => item.id === movie.id)._id;
+  const deleteMovieCard = (movieId) => {
+    const id = savedMovies.find(item => item.movieId === movieId)._id;
     setIsLoading(true);
-    mainApi.deleteMovies(movieId)
-      .then((res) => {
-        if (res) {
-          setSavedMovies(savedMovies.filter(item => item.movieId!== res.movieId));
-        }
+    mainApi.deleteMovies(id)
+      .then(() => {
+        setSavedMovies(savedMovies.filter(item => item._id !== id));
       })
       .catch(err => {
         console.log(err);
@@ -248,6 +246,7 @@ function App() {
       deleteMovieCard(movie);
     }
   }
+
   function onSaveMovie(movie) {
     return savedMovies.some((item) => item.id === movie.id)
   }
@@ -333,7 +332,7 @@ function App() {
                           component={Movies}
                           onSaveMovie={onSaveMovie}
                           moviesCard={filterSavedMovies}
-                          isLoading ={isLoading}
+                          isLoading={isLoading}
                           submitSearch={onSubmitSearchSaved}
                           onBookmarkClick={onBookmarkClick}
           />
