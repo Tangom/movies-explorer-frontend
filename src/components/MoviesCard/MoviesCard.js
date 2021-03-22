@@ -6,13 +6,14 @@ function MoviesCard({onSaveMovie, moviesCard, onBookmarkClick}) {
 
   let isSave = onSaveMovie(moviesCard);
 
-  function handleClick(evt) {
+  function handleOnClick(evt) {
     evt.preventDefault();
-    location.pathname === "/saved-movies" ?
-      onBookmarkClick(moviesCard, false)
-      : onBookmarkClick(moviesCard, !isSave);
+    onBookmarkClick(moviesCard, !isSave);
   }
 
+  function handleOnDelete() {
+    onBookmarkClick(moviesCard, false);
+  }
 
   function duration(duration) {
     const hh = Math.trunc(duration / 60)
@@ -29,7 +30,7 @@ function MoviesCard({onSaveMovie, moviesCard, onBookmarkClick}) {
         </div>
         <button
           className={`movies-card__button ${(location.pathname === "/saved-movies" ? "movies-card__button_delete" : "")}`}
-          type="button" onClick={handleClick}/>
+          type="button" onClick={location.pathname === "/saved-movies" ?handleOnDelete:handleOnClick}/>
       </div>
       <a href={moviesCard.trailer} target="_blank">
         <img className="movies-card__image" alt={moviesCard.nameRU} src={moviesCard.image}/>
