@@ -325,6 +325,7 @@ function App() {
                           isLoading={isLoading}
                           submitSearch={onSubmitSearch}
                           onBookmarkClick={onBookmarkClick}
+                          deleteMovieCard={deleteMovieCard}
           />
 
           <ProtectedRoute path="/saved-movies"
@@ -335,6 +336,7 @@ function App() {
                           isLoading={isLoading}
                           submitSearch={onSubmitSearchSaved}
                           onBookmarkClick={onBookmarkClick}
+                          deleteMovieCard={deleteMovieCard}
           />
 
           <Route path="*">
