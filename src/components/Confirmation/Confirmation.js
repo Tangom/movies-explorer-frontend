@@ -7,7 +7,8 @@ function Confirmation({name, buttonText, linkText, link, onSubmit, disabledButto
       {
         props.children
       }
-      <button className={`form__button ${disabledButton && 'form__button_disabled'} form__button_${name}`} disabled={disabledButton}>{buttonText}</button>
+      <button className={`form__button ${disabledButton && 'form__button_disabled'} form__button_${name}`}
+              disabled={disabledButton}>{buttonText}</button>
       <p className="form__text">{linkText}
         <NavLink className="form__link" to={link}>{linkButton}</NavLink>
       </p>
