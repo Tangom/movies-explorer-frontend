@@ -30,27 +30,45 @@ function App() {
   const [filterSavedMovies, setFilterSavedMovies] = React.useState([]);
   const [initialMovies, setInitialMovies] = React.useState([]);
   const [query, setQuery] = React.useState('');
-  const [updateUserMessege, setUpdateUserMessege] = React.useState('');
+  const [updateUserMessage, setUpdateUserMessage] = React.useState('');
+
 
   React.useEffect(() => {
-    const path = location.pathname;
-    const token = localStorage.getItem('token');
-    if (token) {
-      mainApi.checkToken(token)
-        .then((res) => {
-          if (res) {
-            setLoggedIn(true);
-            getCurrentUser();
-            history.push(path);
-          }
+    if (localStorage.getItem('token') !== null) {
+      Promise.all([mainApi.getUserInfo(), mainApi.getSaveMovies()])
+        .then(([userData, savedMovies]) => {
+          setCurrentUser(userData);
+          setSavedMovies(savedMovies);
+          setSavedMovies(savedMovies);
         })
         .catch((err) => {
           console.log(err);
-          localStorage.removeItem('token')
-          history.push('/');
-        });
+        })
     }
   }, []);
+
+
+
+
+  // React.useEffect(() => {
+  //   const path = location.pathname;
+  //   const token = localStorage.getItem('token');
+  //   if (token) {
+  //     mainApi.checkToken(token)
+  //       .then((res) => {
+  //         if (res) {
+  //           setLoggedIn(true);
+  //           getCurrentUser();
+  //           history.push(path);
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //         localStorage.removeItem('token')
+  //         history.push('/');
+  //       });
+  //   }
+  // }, []);
 
   function onRegister(data) {
     mainApi.register(data).then((data) => {
@@ -101,12 +119,12 @@ function App() {
   }, [loggedIn]);
 
   //функция удаления токена
-  // function signOut() {
-  //   localStorage.removeItem('token');
-  //   localStorage.removeItem('initialMovies');
-  //   setLoggedIn(false);
-  //   history.push('/');
-  // }
+  function signOut() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('initialMovies');
+    setLoggedIn(false);
+    history.push('/');
+  }
 
   // функция авторизации
   function submitLogin(data) {
@@ -127,12 +145,12 @@ function App() {
       .then((dataInfo) => {
         if (dataInfo) {
           setCurrentUser(dataInfo.user);
-          setUpdateUserMessege('Данные успешно редактированы');
+          setUpdateUserMessage('Данные успешно редактированы');
         } else {
-          setUpdateUserMessege('Произошла ошибка');
+          setUpdateUserMessage('Произошла ошибка');
         }
       }).catch((err) => {
-      setUpdateUserMessege('Произошла ошибка');
+      setUpdateUserMessage('Произошла ошибка');
       console.log(err);
     })
   }
@@ -167,19 +185,19 @@ function App() {
   //     .catch((err) => console.log(err))
   // }
 
-  function signOut() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('currentUser');
-    setLoggedIn(false);
-    setCurrentUser({})
-    localStorage.removeItem('initialMovies');
-    localStorage.removeItem('savedMovies');
-    setInitialMovies([]);
-    setSavedMovies([]);
-    setMoviesCards([]);
-    setFilterSavedMovies([]);
-    history.push('/');
-  }
+  // function signOut() {
+  //   localStorage.removeItem('token');
+  //   localStorage.removeItem('currentUser');
+  //   setLoggedIn(false);
+  //   setCurrentUser({})
+  //   localStorage.removeItem('initialMovies');
+  //   localStorage.removeItem('savedMovies');
+  //   setInitialMovies([]);
+  //   setSavedMovies([]);
+  //   setMoviesCards([]);
+  //   setFilterSavedMovies([]);
+  //   history.push('/');
+  // }
 
   function handlerNavVisible() {
     if (location.pathname === '/movies'
@@ -376,7 +394,7 @@ function App() {
                           component={Profile}
                           onUpdateUser={handlerUpdateUser}
                           signOut={signOut}
-                          messege={updateUserMessege}
+                          message={updateUserMessage}
           />
 
           <ProtectedRoute path="/movies"

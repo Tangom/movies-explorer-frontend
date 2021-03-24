@@ -61,6 +61,13 @@ class MainApi {
       .catch((err) => console.log(err));
   };
 
+  getSaveMovies() {
+    return fetch(`${this._url}/movies`, {
+      method: 'GET',
+      headers: this._headers,
+    }).then((res) => this._showErrow(res));
+  }
+
   getToken() {
     return fetch(`${this._url}/users/me`, {
       method: 'GET',

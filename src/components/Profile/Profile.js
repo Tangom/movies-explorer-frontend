@@ -94,7 +94,7 @@ function Profile(onUpdateUser, signOut, ...props) {
                     Поле Email заполнено некорректно
                     </span>
         <div className="profile__button-zone">
-                    <span className="profile__error profile__error_visible">{props.messege}
+                    <span className="profile__error profile__error_visible">{props.message}
                     </span>
           <button type="submit" className={`profile__button ${isValid && 'profile__button_disabled'}`}
                   disabled={isValid}>>
