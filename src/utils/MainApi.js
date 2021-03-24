@@ -4,14 +4,6 @@ class MainApi {
     this._headers = data.headers;
   }
 
-  _showErrow(res) {
-    if (res.ok) {
-      return res.json();
-    }
-    // если ошибка, отклоняем промис
-    Promise.reject(new Error(`Ошибка: ${res.status}`));
-  }
-
   _getResponseData(response) {
     return response.then((res) => {
       if (res.ok) {
@@ -48,7 +40,9 @@ class MainApi {
       headers: this._headers,
       body: JSON.stringify(data)
     })
-      .then((res) => { return res.json() })
+      .then((res) => {
+        return res.json()
+      })
       .then((data) => {
         if (data.token) {
           // сохранение токена в localStorage
@@ -61,19 +55,14 @@ class MainApi {
       .catch((err) => console.log(err));
   };
 
-  getSaveMovies() {
-    return fetch(`${this._url}/movies`, {
-      method: 'GET',
-      headers: this._headers,
-    }).then((res) => this._showErrow(res));
-  }
-
   getToken() {
     return fetch(`${this._url}/users/me`, {
       method: 'GET',
       headers: this._headers,
     })
-      .then((res) => { return res.json() })
+      .then((res) => {
+        return res.json()
+      })
       .then(data => data)
       .catch((err) => console.log(err));
   }
@@ -85,6 +74,19 @@ class MainApi {
       headers: this._headers,
     }).then((res) => this._showErrow(res));
   }
+
+  getUsers() {
+    return fetch(`${this._url}/users`, {
+      method: 'GET',
+      headers: this._headers,
+    })
+      .then((res) => {
+        return res.json()
+      })
+      .then(data => data)
+      .catch((err) => console.log(err));
+  }
+
   // изменение данных пользователя
   setUserInfo(data) {
     return fetch(`${this._url}/users/me`, {
@@ -94,40 +96,46 @@ class MainApi {
     }).then((res) => this._showErrow(res));
   }
 
+  // checkToken(token) {
+  //   return this._getResponseData(fetch(`${this._url}/users/me`, {
+  //     method: 'GET',
+  //     headers: {
+  //       ...this._headers,
+  //       "Authorization": `Bearer ${token}`
+  //     }
+  //   }))
+  // }
 
-  checkToken(token) {
-    return this._getResponseData(fetch(`${this._url}/users/me`, {
+  // getCurrentUser(token) {
+  //   return this._getResponseData(fetch(`${this._url}/users/me`, {
+  //     method: 'GET',
+  //     headers: {
+  //       ...this._headers,
+  //       "Authorization": `Bearer ${token}`
+  //     }
+  //   }))
+  // }
+
+  // saveProfile(data) {
+  //   const token = localStorage.getItem('token');
+  //   return this._getResponseData(fetch(`${this._url}/users/me`, {
+  //     method: 'PATCH',
+  //     headers: {
+  //       ...this._headers,
+  //       "Authorization": `Bearer ${token}`
+  //     },
+  //     body: JSON.stringify({
+  //       name: data.name,
+  //       email: data.email
+  //     })
+  //   }))
+  // }
+
+  getSaveMovies() {
+    return fetch(`${this._url}/movies`, {
       method: 'GET',
-      headers: {
-        ...this._headers,
-        "Authorization": `Bearer ${token}`
-      }
-    }))
-  }
-
-  getCurrentUser(token) {
-    return this._getResponseData(fetch(`${this._url}/users/me`, {
-      method: 'GET',
-      headers: {
-        ...this._headers,
-        "Authorization": `Bearer ${token}`
-      }
-    }))
-  }
-
-  saveProfile(data) {
-    const token = localStorage.getItem('token');
-    return this._getResponseData(fetch(`${this._url}/users/me`, {
-      method: 'PATCH',
-      headers: {
-        ...this._headers,
-        "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        name: data.name,
-        email: data.email
-      })
-    }))
+      headers: this._headers,
+    }).then((res) => this._getResponseData(res));
   }
 
   getMovies() {
@@ -136,7 +144,6 @@ class MainApi {
       method: 'GET',
       headers: {
         ...this._headers,
-        "Authorization": `Bearer ${token}`
       }
     }))
   }
@@ -147,7 +154,6 @@ class MainApi {
       method: 'POST',
       headers: {
         ...this._headers,
-        "Authorization": `Bearer ${token}`
       },
       body: JSON.stringify({
         country: data.country,
@@ -171,7 +177,6 @@ class MainApi {
       method: 'DELETE',
       headers: {
         ...this._headers,
-        "Authorization": `Bearer ${token}`
       }
     }))
   }
@@ -181,8 +186,8 @@ const mainApi = new MainApi({
   url: 'https://api.tango.students.nomoredomains.icu',
   headers: {
     'Content-Type': 'application/json',
+    authorization: `Bearer ${localStorage.getItem('token')}`,
   },
-  authorization: `Bearer ${localStorage.getItem('token')}`,
   credentials: 'include',
 })
 
