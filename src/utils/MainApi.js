@@ -4,6 +4,14 @@ class MainApi {
     this._headers = data.headers;
   }
 
+  _showErrow(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    // если ошибка, отклоняем промис
+    Promise.reject(new Error(`Ошибка: ${res.status}`));
+  }
+
   _getResponseData(response) {
     return response.then((res) => {
       if (res.ok) {
@@ -34,20 +42,51 @@ class MainApi {
     }))
   }
 
-  login(email, password) {
-    return this._getResponseData(fetch(`${this._url}/signin`, {
+  login(data) {
+    return fetch(`${this._url}/signin`, {
       method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        "email": email,
-        "password": password
+      headers: this._headers,
+      body: JSON.stringify(data)
+    })
+      .then((res) => { return res.json() })
+      .then((data) => {
+        if (data.token) {
+          // сохранение токена в localStorage
+          localStorage.setItem('token', data.token);
+          return data;
+        } else {
+          return;
+        }
       })
-    }))
+      .catch((err) => console.log(err));
+  };
+
+  getToken() {
+    return fetch(`${this._url}/users/me`, {
+      method: 'GET',
+      headers: this._headers,
+    })
+      .then((res) => { return res.json() })
+      .then(data => data)
+      .catch((err) => console.log(err));
   }
+
+  // запрос пользователя
+  getUserInfo() {
+    return fetch(`${this._url}/users/me`, {
+      method: 'GET',
+      headers: this._headers,
+    }).then((res) => this._showErrow(res));
+  }
+  // изменение данных пользователя
+  setUserInfo(data) {
+    return fetch(`${this._url}/users/me`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify(data),
+    }).then((res) => this._showErrow(res));
+  }
+
 
   checkToken(token) {
     return this._getResponseData(fetch(`${this._url}/users/me`, {
@@ -136,6 +175,7 @@ const mainApi = new MainApi({
   headers: {
     'Content-Type': 'application/json',
   },
+  authorization: `Bearer ${localStorage.getItem('token')}`,
   credentials: 'include',
 })
 
