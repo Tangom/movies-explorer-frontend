@@ -4,7 +4,7 @@ class MainApi {
     this._headers = data.headers;
   }
 
-  _getResponseData(response) {
+    _getResponseData(response) {
     return response.then((res) => {
       if (res.ok) {
         return res.json();

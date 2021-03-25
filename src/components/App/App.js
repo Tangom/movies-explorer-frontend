@@ -30,6 +30,8 @@ function App() {
   const [filterSavedMovies, setFilterSavedMovies] = React.useState([]);
   const [initialMovies, setInitialMovies] = React.useState([]);
   const [query, setQuery] = React.useState('');
+  const [updateUserMessege, setUpdateUserMessege] = React.useState('');
+
 
   React.useEffect(() => {
     const path = location.pathname;
@@ -102,6 +104,7 @@ function App() {
     mainApi.saveProfile(data)
       .then((profile) => {
         setCurrentUser(profile);
+        setUpdateUserMessege('Данные успешно редактированы');
       })
       .catch((err) => console.log(err))
   }
@@ -239,7 +242,6 @@ function App() {
   }
 
   function onBookmarkClick(movie, isMarked) {
-
     if (isMarked) {
       savedMovie(movie);
     } else {
@@ -313,8 +315,9 @@ function App() {
           <ProtectedRoute path="/profile"
                           loggedIn={loggedIn}
                           component={Profile}
-                          saveProfile={saveProfile}
+                          onUpdateUser={saveProfile}
                           signOut={signOut}
+                          messege={updateUserMessege}
           />
 
           <ProtectedRoute path="/movies"
