@@ -1,7 +1,7 @@
 import React from 'react';
 import {CurrentUserContext} from '../../context/CurrentUserContext';
 
-function Profile(onUpdateUser, signOut, ...props) {
+function Profile(saveProfile, signOut) {
 
   const [inputValue, setInputValue] = React.useState({
     name: '',
@@ -18,13 +18,13 @@ function Profile(onUpdateUser, signOut, ...props) {
 
   const currentUser = React.useContext(CurrentUserContext);
 
-  // React.useEffect(() => {
-  //   setInputValue({
-  //     ...inputValue,
-  //     name: currentUser.name || '',
-  //     email: currentUser.email || ''
-  //   })
-  // }, [currentUser]);
+  React.useEffect(() => {
+    setInputValue({
+      ...inputValue,
+      name: currentUser.name || '',
+      email: currentUser.email || ''
+    })
+  }, [currentUser]);
 
   React.useEffect(() => {
     if (
@@ -39,17 +39,17 @@ function Profile(onUpdateUser, signOut, ...props) {
 
   function handleOnSubmit(evt) {
     evt.preventDefault();
-    onUpdateUser(inputValue);
+    saveProfile(inputValue);
   }
 
   function handleName(evt) {
-    const {name, value} = evt.target;
+    const { name, value } = evt.target;
     setInputValue({...inputValue, [name]: value})
     setInputError({...inputError, [name]: value.length < 2})
   };
 
   function handleEmail(evt) {
-    const {email, value} = evt.target;
+    const { email, value } = evt.target;
     setInputValue({...inputValue, [email]: value})
     const eml = /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i
     setInputError({...inputError, [email]: !eml.test(value)})
@@ -77,10 +77,6 @@ function Profile(onUpdateUser, signOut, ...props) {
             handleName(evt)
           }}/>
         </label>
-        <span
-          className={`profile__error ${inputError.name &&'profile__error_visible'}`}>
-                    Имя заполнено некорректно
-                </span>
         <div className="profile__line"/>
         <label className="profile__label">Почта
           <input className="profile__input" type="Email" minLength="6" maxLength="40" required value={inputValue.email}
@@ -89,12 +85,9 @@ function Profile(onUpdateUser, signOut, ...props) {
                    handleEmail(evt)
                  }}/>
         </label>
-        <span
-          className={`profile__error ${inputError.email &&'profile__error_visible'}`}>
-                    Поле Email заполнено некорректно
-                    </span>
         <div className="profile__button-zone">
-                    <span className="profile__error profile__error_visible">{props.message}
+                    <span className="profile__error profile__error_visible">
+                            Ошибка.
                     </span>
           <button type="submit" className={`profile__button ${isValid && 'profile__button_disabled'}`}
                   disabled={isValid}>>
