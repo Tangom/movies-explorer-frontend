@@ -34,26 +34,37 @@ class MainApi {
     }))
   }
 
-  login(data) {
-    return fetch(`${this._url}/signin`, {
+  login(email, password) {
+    return this._getResponseData(fetch(`${this._baseUrl}/signin`, {
       method: 'POST',
       headers: this._headers,
-      body: JSON.stringify(data)
-    })
-      .then((res) => {
-        return res.json()
+      body: JSON.stringify({
+        "email": email,
+        "password": password
       })
-      .then((data) => {
-        if (data.token) {
-          // сохранение токена в localStorage
-          localStorage.setItem('token', data.token);
-          return data;
-        } else {
-          return;
-        }
-      })
-      .catch((err) => console.log(err));
-  };
+    }))
+  }
+
+  // login(data) {
+  //   return fetch(`${this._url}/signin`, {
+  //     method: 'POST',
+  //     headers: this._headers,
+  //     body: JSON.stringify(data)
+  //   })
+  //     .then((res) => {
+  //       return res.json()
+  //     })
+  //     .then((data) => {
+  //       if (data.token) {
+  //         // сохранение токена в localStorage
+  //         localStorage.setItem('token', data.token);
+  //         return data;
+  //       } else {
+  //         return;
+  //       }
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
 
   getToken() {
     return fetch(`${this._url}/users/me`, {
