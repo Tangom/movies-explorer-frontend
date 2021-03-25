@@ -72,7 +72,7 @@ class MainApi {
     return fetch(`${this._url}/users/me`, {
       method: 'GET',
       headers: this._headers,
-    }).then((res) => this._showErrow(res));
+    }).then((res) => this._getResponseData(res));
   }
 
   getUsers() {
@@ -93,7 +93,7 @@ class MainApi {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify(data),
-    }).then((res) => this._showErrow(res));
+    }).then((res) => this._getResponseData(res));
   }
 
   // checkToken(token) {
@@ -139,7 +139,6 @@ class MainApi {
   }
 
   getMovies() {
-    const token = localStorage.getItem('token');
     return this._getResponseData(fetch(`${this._url}/movies`, {
       method: 'GET',
       headers: {
@@ -149,7 +148,6 @@ class MainApi {
   }
 
   createMovie(data) {
-    const token = localStorage.getItem('token');
     return this._getResponseData(fetch(`${this._url}/movies`, {
       method: 'POST',
       headers: {
@@ -172,7 +170,6 @@ class MainApi {
   }
 
   deleteMovies(movieId) {
-    const token = localStorage.getItem('token');
     return this._getResponseData(fetch(`${this._url}/movies/${movieId}`, {
       method: 'DELETE',
       headers: {
