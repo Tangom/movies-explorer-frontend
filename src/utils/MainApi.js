@@ -46,6 +46,27 @@ class MainApi {
       .then(data => data)
       .catch((err) => console.log(err));
   }
+  login(data) {
+    return fetch(`${this._url}/signin`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: JSON.stringify(data)
+    })
+      .then((res) => { return res.json() })
+      .then((data) => {
+        if (data.token) {
+          // сохранение токена в localStorage
+          localStorage.setItem('token', data.token);
+          return data;
+        } else {
+          return;
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
 _getResponseData(response) {
     return response.then((res) => {
@@ -76,19 +97,19 @@ _getResponseData(response) {
     }))
   }
 
-  login(email, password) {
-    return this._getResponseData(fetch(`${this._url}/signin`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        "email": email,
-        "password": password
-      })
-    }))
-  }
+  // login(email, password) {
+  //   return this._getResponseData(fetch(`${this._url}/signin`, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       "email": email,
+  //       "password": password
+  //     })
+  //   }))
+  // }
 
   checkToken(token) {
     return this._getResponseData(fetch(`${this._url}/users/me`, {
