@@ -34,6 +34,18 @@ class MainApi {
     }).then((res) => this._showErrow(res));
   }
 
+  getToken() {
+    return fetch(`${this._url}/users/me`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+      .then((res) => { return res.json() })
+      .then(data => data)
+      .catch((err) => console.log(err));
+  }
 
 _getResponseData(response) {
     return response.then((res) => {
