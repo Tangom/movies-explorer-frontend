@@ -64,8 +64,8 @@ function App() {
       });
   }
 
-  function login(email, password) {
-    mainApi.login(email, password)
+  function login(data) {
+    mainApi.login(data)
       .then((res) => {
         if (res.token) {
           localStorage.setItem('token', res.token);

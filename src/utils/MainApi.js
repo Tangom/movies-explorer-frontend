@@ -34,7 +34,7 @@ class MainApi {
     }))
   }
 
-  login(email, password) {
+  login(data) {
     return this._getResponseData(fetch(`${this._url}/signin`, {
       method: 'POST',
       credentials: 'include',
@@ -43,8 +43,8 @@ class MainApi {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        "email": email,
-        "password": password
+        "email": data.email,
+        "password": data.password
       })
     }))
   }
