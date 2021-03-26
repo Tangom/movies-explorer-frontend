@@ -26,7 +26,6 @@ class MainApi {
         "email": data.email,
         "password": data.password
       }),
-      credentials: 'include',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -37,7 +36,6 @@ class MainApi {
   login(email, password) {
     return this._getResponseData(fetch(`${this._url}/signin`, {
       method: 'POST',
-      credentials: 'include',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
