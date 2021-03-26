@@ -15,7 +15,6 @@ function Profile(onUpdateUser, signOut, ...props) {
 
   const [isValid, setIsValid] = React.useState(true);
 
-
   const currentUser = React.useContext(CurrentUserContext);
 
   React.useEffect(() => {
