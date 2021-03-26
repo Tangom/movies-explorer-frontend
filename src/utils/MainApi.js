@@ -4,7 +4,38 @@ class MainApi {
     this._headers = data.headers;
   }
 
-    _getResponseData(response) {
+
+  _showErrow(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    // если ошибка, отклоняем промис
+    Promise.reject(new Error(`Ошибка: ${res.status}`));
+  }
+
+  getUserInfo() {
+    return fetch(`${this._url}/users/me`, {
+      method: 'GET',
+      headers:{
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    }).then((res) => this._showErrow(res));
+  }
+
+  setUserInfo(data) {
+    return fetch(`${this._url}/users/me`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: JSON.stringify(data),
+    }).then((res) => this._showErrow(res));
+  }
+
+
+_getResponseData(response) {
     return response.then((res) => {
       if (res.ok) {
         return res.json();

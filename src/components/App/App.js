@@ -34,24 +34,51 @@ function App() {
 
 
   React.useEffect(() => {
-    const path = location.pathname;
-    const token = localStorage.getItem('token');
-    if (token) {
-      mainApi.checkToken(token)
-        .then((res) => {
-          if (res) {
-            setLoggedIn(true);
-            getCurrentUser();
-            history.push(path);
-          }
+    if (localStorage.getItem('token') !== null) {
+      Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
+        .then(([userData, saveMoviesCards]) => {
+          setCurrentUser(userData);
+          setSavedMovies(saveMoviesCards);
         })
         .catch((err) => {
           console.log(err);
-          localStorage.removeItem('token')
-          history.push('/');
-        });
+        })
     }
   }, []);
+
+  function handlerUpdateUser(data) {
+    mainApi.setUserInfo(data)
+      .then((dataInfo) => {
+        if (dataInfo) {
+          setCurrentUser(dataInfo.user);
+          setUpdateUserMessege('Данные успешно редактированы');
+        } else {
+          setUpdateUserMessege('Произошла ошибка');
+        }
+      }).catch((err) => {
+      setUpdateUserMessege('Произошла ошибка');
+      console.log(err);
+    })
+  }
+  // React.useEffect(() => {
+  //   const path = location.pathname;
+  //   const token = localStorage.getItem('token');
+  //   if (token) {
+  //     mainApi.checkToken(token)
+  //       .then((res) => {
+  //         if (res) {
+  //           setLoggedIn(true);
+  //           getCurrentUser();
+  //           history.push(path);
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //         localStorage.removeItem('token')
+  //         history.push('/');
+  //       });
+  //   }
+  // }, []);
 
   function onRegister(data) {
     mainApi.register(data).then((data) => {
@@ -70,7 +97,7 @@ function App() {
         if (res.token) {
           localStorage.setItem('token', res.token);
           setLoggedIn(true);
-          getCurrentUser();
+          setCurrentUser(res)
           history.push('/movies');
         }
       })
@@ -86,28 +113,28 @@ function App() {
     login(email, password);
   }
 
-  function getCurrentUser() {
-    const token = localStorage.getItem('token');
-    mainApi.getCurrentUser(token)
-      .then((res) => {
-        if (res) {
-          setCurrentUser(res)
-          localStorage.setItem('currentUser', JSON.stringify(res))
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
-  function saveProfile(data) {
-    mainApi.saveProfile(data)
-      .then((profile) => {
-        setCurrentUser(profile);
-        setUpdateUserMessege('Данные успешно редактированы');
-      })
-      .catch((err) => console.log(err))
-  }
+  // function getCurrentUser() {
+  //   const token = localStorage.getItem('token');
+  //   mainApi.getCurrentUser(token)
+  //     .then((res) => {
+  //       if (res) {
+  //         setCurrentUser(res)
+  //         localStorage.setItem('currentUser', JSON.stringify(res))
+  //       }
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // }
+  //
+  // function saveProfile(data) {
+  //   mainApi.saveProfile(data)
+  //     .then((profile) => {
+  //       setCurrentUser(profile);
+  //       setUpdateUserMessege('Данные успешно редактированы');
+  //     })
+  //     .catch((err) => console.log(err))
+  // }
 
   function signOut() {
     localStorage.removeItem('token');
@@ -315,7 +342,7 @@ function App() {
           <ProtectedRoute path="/profile"
                           loggedIn={loggedIn}
                           component={Profile}
-                          onUpdateUser={saveProfile}
+                          onUpdateUser={handlerUpdateUser}
                           signOut={signOut}
                           messege={updateUserMessege}
           />
