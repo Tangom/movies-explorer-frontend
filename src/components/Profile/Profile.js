@@ -18,13 +18,13 @@ function Profile(onUpdateUser, signOut, ...props) {
 
   const currentUser = React.useContext(CurrentUserContext);
 
-  // React.useEffect(() => {
-  //   setInputValue({
-  //     ...inputValue,
-  //     name: currentUser.name || '',
-  //     email: currentUser.email || ''
-  //   })
-  // }, [currentUser]);
+  React.useEffect(() => {
+    setInputValue({
+      ...inputValue,
+      name: currentUser.name || '',
+      email: currentUser.email || ''
+    })
+  }, [currentUser]);
 
   React.useEffect(() => {
     if (
