@@ -46,20 +46,20 @@ function App() {
     }
   }, []);
 
-  function handlerUpdateUser(data) {
-    mainApi.setUserInfo(data)
-      .then((dataInfo) => {
-        if (dataInfo) {
-          setCurrentUser(dataInfo.user);
-          setUpdateUserMessege('Данные успешно редактированы');
-        } else {
-          setUpdateUserMessege('Произошла ошибка');
-        }
-      }).catch((err) => {
-      setUpdateUserMessege('Произошла ошибка');
-      console.log(err);
-    })
-  }
+  // function handlerUpdateUser(data) {
+  //   mainApi.setUserInfo(data)
+  //     .then((dataInfo) => {
+  //       if (dataInfo) {
+  //         setCurrentUser(dataInfo.user);
+  //         setUpdateUserMessege('Данные успешно редактированы');
+  //       } else {
+  //         setUpdateUserMessege('Произошла ошибка');
+  //       }
+  //     }).catch((err) => {
+  //     setUpdateUserMessege('Произошла ошибка');
+  //     console.log(err);
+  //   })
+  // }
 
   function handlerLogin() {
     const token = localStorage.getItem('token');
@@ -162,14 +162,14 @@ function App() {
   //     });
   // }
   //
-  // function saveProfile(data) {
-  //   mainApi.saveProfile(data)
-  //     .then((profile) => {
-  //       setCurrentUser(profile);
-  //       setUpdateUserMessege('Данные успешно редактированы');
-  //     })
-  //     .catch((err) => console.log(err))
-  // }
+  function saveProfile(data) {
+    mainApi.saveProfile(data)
+      .then((profile) => {
+        setCurrentUser(profile);
+        setUpdateUserMessege('Данные успешно редактированы');
+      })
+      .catch((err) => console.log(err))
+  }
 
   function signOut() {
     localStorage.removeItem('token');
@@ -377,7 +377,7 @@ function App() {
           <ProtectedRoute path="/profile"
                           loggedIn={loggedIn}
                           component={Profile}
-                          onUpdateUser={handlerUpdateUser}
+                          onUpdateUser={saveProfile}
                           signOut={signOut}
                           messege={updateUserMessege}
           />
