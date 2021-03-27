@@ -133,7 +133,6 @@ function App() {
         if (res.token) {
           localStorage.setItem('token', res.token);
           setLoggedIn(true);
-          setCurrentUser(res)
           history.push('/movies');
         }
       })
