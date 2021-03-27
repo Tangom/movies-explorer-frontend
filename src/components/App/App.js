@@ -60,6 +60,7 @@ function App() {
       console.log(err);
     })
   }
+
   function handlerLogin() {
     const token = localStorage.getItem('token');
     if (token !== null) {
@@ -76,10 +77,24 @@ function App() {
       })
     } else signOut();
   }
+
   // сохранение токена для повторного входа
   React.useEffect(() => {
     handlerLogin();
   }, [loggedIn]);
+
+  function submitLogin(data) {
+    mainApi.login(data).then((data) => {
+      if (data) {
+        handlerLogin();
+        setCurrentUser(data);
+        history.push('/');
+      }
+    })
+      .catch(err => {
+        console.log(err);
+      })
+  }
 
   // React.useEffect(() => {
   //   const path = location.pathname;
@@ -112,27 +127,27 @@ function App() {
       });
   }
 
-  function login(email, password) {
-    mainApi.login(email, password)
-      .then((res) => {
-        if (res.token) {
-          localStorage.setItem('token', res.token);
-          setLoggedIn(true);
-          setCurrentUser(res)
-          history.push('/movies');
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  }
-
-  function submitLogin({email, password}) {
-    if (!email || !password) {
-      return;
-    }
-    login(email, password);
-  }
+  // function login(email, password) {
+  //   mainApi.login(email, password)
+  //     .then((res) => {
+  //       if (res.token) {
+  //         localStorage.setItem('token', res.token);
+  //         setLoggedIn(true);
+  //         setCurrentUser(res)
+  //         history.push('/movies');
+  //       }
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     })
+  // }
+  //
+  // function submitLogin({email, password}) {
+  //   if (!email || !password) {
+  //     return;
+  //   }
+  //   login(email, password);
+  // }
 
   // function getCurrentUser() {
   //   const token = localStorage.getItem('token');
