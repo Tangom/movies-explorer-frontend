@@ -47,7 +47,6 @@ function App() {
     }
   }, []);
 
-
   // React.useEffect(() => {
   //   const path = location.pathname;
   //   const token = localStorage.getItem('token');
@@ -123,19 +122,7 @@ function App() {
     setLoggedIn(false);
     history.push('/');
   }
-  // function signOut() {
-  //   localStorage.removeItem('token');
-  //   localStorage.removeItem('currentUser');
-  //   setLoggedIn(false);
-  //   setCurrentUser({})
-  //   localStorage.removeItem('initialMovies');
-  //   localStorage.removeItem('savedMovies');
-  //   setInitialMovies([]);
-  //   setSavedMovies([]);
-  //   setMoviesCards([]);
-  //   setFilterSavedMovies([]);
-  //   history.push('/');
-  // }
+
   // функция авторизации
   function submitLogin(data) {
     mainApi.login(data).then((data) => {
@@ -164,6 +151,8 @@ function App() {
       console.log(err);
     })
   }
+
+
   // function submitLogin({email, password}) {
   //   if (!email || !password) {
   //     return;
@@ -171,19 +160,19 @@ function App() {
   //   login(email, password);
   // }
 
-  // function getCurrentUser() {
-  //   const token = localStorage.getItem('token');
-  //   mainApi.getCurrentUser(token)
-  //     .then((res) => {
-  //       if (res) {
-  //         setCurrentUser(res)
-  //         localStorage.setItem('currentUser', JSON.stringify(res))
-  //       }
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // }
+  function getCurrentUser() {
+    const token = localStorage.getItem('token');
+    mainApi.getCurrentUser(token)
+      .then((res) => {
+        if (res) {
+          setCurrentUser(res)
+          localStorage.setItem('currentUser', JSON.stringify(res))
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 
   // function saveProfile(data) {
   //   mainApi.saveProfile(data)
@@ -191,6 +180,20 @@ function App() {
   //       setCurrentUser(profile);
   //     })
   //     .catch((err) => console.log(err))
+  // }
+
+  // function signOut() {
+  //   localStorage.removeItem('token');
+  //   localStorage.removeItem('currentUser');
+  //   setLoggedIn(false);
+  //   setCurrentUser({})
+  //   localStorage.removeItem('initialMovies');
+  //   localStorage.removeItem('savedMovies');
+  //   setInitialMovies([]);
+  //   setSavedMovies([]);
+  //   setMoviesCards([]);
+  //   setFilterSavedMovies([]);
+  //   history.push('/');
   // }
 
   function handlerNavVisible() {
