@@ -30,16 +30,15 @@ function App() {
   const [filterSavedMovies, setFilterSavedMovies] = React.useState([]);
   const [initialMovies, setInitialMovies] = React.useState([]);
   const [query, setQuery] = React.useState('');
-  const [updateUserMessage, setUpdateUserMessage] = React.useState('');
+  const [updateUserMessege, setUpdateUserMessege] = React.useState('');
 
 
   React.useEffect(() => {
     if (localStorage.getItem('token') !== null) {
-      Promise.all([mainApi.getUserInfo(), mainApi.getSaveMovies()])
-        .then(([userData, savedMovies]) => {
+      Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
+        .then(([userData, saveMoviesCards]) => {
           setCurrentUser(userData);
-          setSavedMovies(savedMovies);
-          setSavedMovies(savedMovies);
+          setSavedMovies(saveMoviesCards);
         })
         .catch((err) => {
           console.log(err);
@@ -47,8 +46,40 @@ function App() {
     }
   }, []);
 
-
-
+  function handlerUpdateUser(data) {
+    mainApi.setUserInfo(data)
+      .then((dataInfo) => {
+        if (dataInfo) {
+          setCurrentUser(dataInfo.user);
+          setUpdateUserMessege('Данные успешно редактированы');
+        } else {
+          setUpdateUserMessege('Произошла ошибка');
+        }
+      }).catch((err) => {
+      setUpdateUserMessege('Произошла ошибка');
+      console.log(err);
+    })
+  }
+  function handlerLogin() {
+    const token = localStorage.getItem('token');
+    if (token !== null) {
+      mainApi.getToken(token)
+        .then((data) => {
+          if (data) {
+            setCurrentUser(data);
+            setLoggedIn(true);
+            history.push('/movies');
+          }
+        }).catch((err) => {
+        console.log(err);
+        signOut();
+      })
+    } else signOut();
+  }
+  // сохранение токена для повторного входа
+  React.useEffect(() => {
+    handlerLogin();
+  }, [loggedIn]);
 
   // React.useEffect(() => {
   //   const path = location.pathname;
@@ -81,123 +112,64 @@ function App() {
       });
   }
 
-  // function login(email, password) {
-  //   mainApi.login(email, password)
-  //     .then((res) => {
-  //       if (res.token) {
-  //         localStorage.setItem('token', res.token);
-  //         setLoggedIn(true);
-  //         getCurrentUser();
-  //         history.push('/movies');
-  //       }
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     })
-  // }
-  //
-  function handlerLogin() {
-    const token = localStorage.getItem('token');
-    if (token !== null) {
-      mainApi.getToken(token)
-        .then((data) => {
-          if (data) {
-            setCurrentUser(data);
-            setLoggedIn(true);
-            history.push('/movies');
-          }
-        }).catch((err) => {
-        console.log(err);
-        signOut();
-      })
-    } else signOut();
-  }
-
-  // сохранение токена для повторного входа
-  React.useEffect(() => {
-    handlerLogin();
-  }, [loggedIn]);
-
-  //функция удаления токена
-  function signOut() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('initialMovies');
-    setLoggedIn(false);
-    history.push('/');
-  }
-
-  // функция авторизации
-  function submitLogin(data) {
-    mainApi.login(data).then((data) => {
-      if (data) {
-        handlerLogin();
-        setCurrentUser(data);
-        history.push('/');
-      }
-    }).catch(err => {
-      console.log(err);
-    })
-  }
-
-  // функция обаботки данных о пользователе
-  function handlerUpdateUser(data) {
-    mainApi.setUserInfo(data)
-      .then((dataInfo) => {
-        if (dataInfo) {
-          setCurrentUser(dataInfo.user);
-          setUpdateUserMessage('Данные успешно редактированы');
-        } else {
-          setUpdateUserMessage('Произошла ошибка');
-        }
-      }).catch((err) => {
-      setUpdateUserMessage('Произошла ошибка');
-      console.log(err);
-    })
-  }
-
-
-  // function submitLogin({email, password}) {
-  //   if (!email || !password) {
-  //     return;
-  //   }
-  //   login(email, password);
-  // }
-
-  function getCurrentUser() {
-    const token = localStorage.getItem('token');
-    mainApi.getCurrentUser(token)
+  function login(email, password) {
+    mainApi.login(email, password)
       .then((res) => {
-        if (res) {
+        if (res.token) {
+          localStorage.setItem('token', res.token);
+          setLoggedIn(true);
           setCurrentUser(res)
-          localStorage.setItem('currentUser', JSON.stringify(res))
+          history.push('/movies');
         }
       })
       .catch(err => {
         console.log(err);
-      });
+      })
   }
 
+  function submitLogin({email, password}) {
+    if (!email || !password) {
+      return;
+    }
+    login(email, password);
+  }
+
+  // function getCurrentUser() {
+  //   const token = localStorage.getItem('token');
+  //   mainApi.getCurrentUser(token)
+  //     .then((res) => {
+  //       if (res) {
+  //         setCurrentUser(res)
+  //         localStorage.setItem('currentUser', JSON.stringify(res))
+  //       }
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // }
+  //
   // function saveProfile(data) {
   //   mainApi.saveProfile(data)
   //     .then((profile) => {
   //       setCurrentUser(profile);
+  //       setUpdateUserMessege('Данные успешно редактированы');
   //     })
   //     .catch((err) => console.log(err))
   // }
 
-  // function signOut() {
-  //   localStorage.removeItem('token');
-  //   localStorage.removeItem('currentUser');
-  //   setLoggedIn(false);
-  //   setCurrentUser({})
-  //   localStorage.removeItem('initialMovies');
-  //   localStorage.removeItem('savedMovies');
-  //   setInitialMovies([]);
-  //   setSavedMovies([]);
-  //   setMoviesCards([]);
-  //   setFilterSavedMovies([]);
-  //   history.push('/');
-  // }
+  function signOut() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('currentUser');
+    setLoggedIn(false);
+    setCurrentUser({})
+    localStorage.removeItem('initialMovies');
+    localStorage.removeItem('savedMovies');
+    setInitialMovies([]);
+    setSavedMovies([]);
+    setMoviesCards([]);
+    setFilterSavedMovies([]);
+    history.push('/');
+  }
 
   function handlerNavVisible() {
     if (location.pathname === '/movies'
@@ -318,7 +290,6 @@ function App() {
   }
 
   function onBookmarkClick(movie, isMarked) {
-
     if (isMarked) {
       savedMovie(movie);
     } else {
@@ -394,7 +365,7 @@ function App() {
                           component={Profile}
                           onUpdateUser={handlerUpdateUser}
                           signOut={signOut}
-                          message={updateUserMessage}
+                          messege={updateUserMessege}
           />
 
           <ProtectedRoute path="/movies"
