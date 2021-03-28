@@ -4,6 +4,71 @@ class MainApi {
     this._headers = data.headers;
   }
 
+
+  _showErrow(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    // если ошибка, отклоняем промис
+    Promise.reject(new Error(`Ошибка: ${res.status}`));
+  }
+
+  getUserInfo() {
+    return fetch(`${this._url}/users/me`, {
+      method: 'GET',
+      headers:{
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    }).then((res) => this._showErrow(res));
+  }
+
+  setUserInfo(data) {
+    return fetch(`${this._url}/users/me`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: JSON.stringify(data),
+    }).then((res) => this._showErrow(res));
+  }
+
+  getToken() {
+    return fetch(`${this._url}/users/me`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+      .then((res) => { return res.json() })
+      .then(data => data)
+      .catch((err) => console.log(err));
+  }
+
+  // login(data) {
+  //   return fetch(`${this._url}/signin`, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       authorization: `Bearer ${localStorage.getItem('token')}`,
+  //     },
+  //     body: JSON.stringify(data)
+  //   })
+  //     .then((res) => { return res.json() })
+  //     .then((data) => {
+  //       if (data.token) {
+  //         // сохранение токена в localStorage
+  //         localStorage.setItem('token', data.token);
+  //         return data;
+  //       } else {
+  //         return;
+  //       }
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
+
   _getResponseData(response) {
     return response.then((res) => {
       if (res.ok) {
@@ -26,7 +91,6 @@ class MainApi {
         "email": data.email,
         "password": data.password
       }),
-      credentials: 'include',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -34,17 +98,16 @@ class MainApi {
     }))
   }
 
-  login(data) {
+  login(email, password) {
     return this._getResponseData(fetch(`${this._url}/signin`, {
       method: 'POST',
-      credentials: 'include',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        "email": data.email,
-        "password": data.password
+        "email": email,
+        "password": password
       })
     }))
   }
