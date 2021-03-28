@@ -84,38 +84,38 @@ function App() {
   // }, [loggedIn]);
 
 
-  // function submitLogin(data) {
-  //   mainApi.login(data).then((data) => {
-  //     if (data) {
-  //       handlerLogin();
-  //       setCurrentUser(data);
-  //       history.push('/');
-  //     }
-  //   })
-  //     .catch(err => {
-  //       console.log(err);
-  //     })
-  // }
+  function submitLogin(data) {
+    mainApi.login(data).then((data) => {
+      if (data) {
+        getCurrentUser();
+        setCurrentUser(data);
+        history.push('/');
+      }
+    })
+      .catch(err => {
+        console.log(err);
+      })
+  }
 
-  React.useEffect(() => {
-    const path = location.pathname;
-    const token = localStorage.getItem('token');
-    if (token) {
-      mainApi.checkToken(token)
-        .then((res) => {
-          if (res) {
-            setLoggedIn(true);
-            getCurrentUser();
-            history.push(path);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          localStorage.removeItem('token')
-          history.push('/');
-        });
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   const path = location.pathname;
+  //   const token = localStorage.getItem('token');
+  //   if (token) {
+  //     mainApi.checkToken(token)
+  //       .then((res) => {
+  //         if (res) {
+  //           setLoggedIn(true);
+  //           getCurrentUser();
+  //           history.push(path);
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //         localStorage.removeItem('token')
+  //         history.push('/');
+  //       });
+  //   }
+  // }, []);
 
   function onRegister(data) {
     mainApi.register(data).then((data) => {
@@ -128,27 +128,27 @@ function App() {
       });
   }
 
-  function login(email, password) {
-    mainApi.login(email, password)
-      .then((res) => {
-        if (res.token) {
-          localStorage.setItem('token', res.token);
-          setLoggedIn(true);
-          getCurrentUser();
-          history.push('/movies');
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  }
-
-  function submitLogin({email, password}) {
-    if (!email || !password) {
-      return;
-    }
-    login(email, password);
-  }
+  // function login(email, password) {
+  //   mainApi.login(email, password)
+  //     .then((res) => {
+  //       if (res.token) {
+  //         localStorage.setItem('token', res.token);
+  //         setLoggedIn(true);
+  //         getCurrentUser();
+  //         history.push('/movies');
+  //       }
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     })
+  // }
+  //
+  // function submitLogin({email, password}) {
+  //   if (!email || !password) {
+  //     return;
+  //   }
+  //   login(email, password);
+  // }
 
   function getCurrentUser() {
     const token = localStorage.getItem('token');
