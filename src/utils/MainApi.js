@@ -1,7 +1,7 @@
 class MainApi {
-  constructor(options) {
-    this._url = options.url;
-    this._headers = options.headers;
+  constructor(data) {
+    this._url = data.url;
+    this._headers = data.headers;
   }
 
   _showErrow(res) {
