@@ -33,18 +33,18 @@ function App() {
   const [updateUserMessege, setUpdateUserMessege] = React.useState('');
 
 
-  // React.useEffect(() => {
-  //   if (localStorage.getItem('token') !== null) {
-  //     Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
-  //       .then(([userData, saveMoviesCards]) => {
-  //         setCurrentUser(userData);
-  //         setSavedMovies(saveMoviesCards);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       })
-  //   }
-  // }, []);
+  React.useEffect(() => {
+    if (localStorage.getItem('token') !== null) {
+      Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
+        .then(([userData, saveMoviesCards]) => {
+          setCurrentUser(userData);
+          setSavedMovies(saveMoviesCards);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
+  }, []);
 
   function handlerUpdateUser(data) {
     mainApi.setUserInfo(data)
@@ -188,14 +188,11 @@ function App() {
   }
 
   function handlerNavVisible() {
-    if (location.pathname === '/movies'
-      || location.pathname === '/saved-movies'
-      || location.pathname === '/profile') {
-      setIsNavVisible(false);
-    } else {
-      setIsNavVisible(true)
-    }
+    if (loggedIn) {
+      setIsNavVisible(true);
+    } else { setIsNavVisible(false) };
   }
+
 
   function handlerFootVisible() {
     if (location.pathname === '/movies'
