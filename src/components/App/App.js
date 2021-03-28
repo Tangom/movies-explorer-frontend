@@ -34,70 +34,6 @@ function App() {
 
 
   React.useEffect(() => {
-    if (localStorage.getItem('token') !== null) {
-      Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
-        .then(([userData, saveMoviesCards]) => {
-          setCurrentUser(userData);
-          setSavedMovies(saveMoviesCards);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-    }
-  }, []);
-
-  function handlerUpdateUser(data) {
-    mainApi.setUserInfo(data)
-      .then((dataInfo) => {
-        if (dataInfo) {
-          setCurrentUser(dataInfo.user);
-          setUpdateUserMessege('Данные успешно редактированы');
-        } else {
-          setUpdateUserMessege('Произошла ошибка');
-        }
-      }).catch((err) => {
-      setUpdateUserMessege('Произошла ошибка');
-      console.log(err);
-    })
-  }
-
-  // function handlerLogin() {
-  //   const token = localStorage.getItem('token');
-  //   if (token !== null) {
-  //     mainApi.getToken(token)
-  //       .then((data) => {
-  //         if (data) {
-  //           setCurrentUser(data);
-  //           setLoggedIn(true);
-  //           history.push('/movies');
-  //         }
-  //       }).catch((err) => {
-  //       console.log(err);
-  //       signOut();
-  //     })
-  //   } else signOut();
-  // }
-
-  // сохранение токена для повторного входа
-  // React.useEffect(() => {
-  //   handlerLogin();
-  // }, [loggedIn]);
-
-
-  // function submitLogin(data) {
-  //   mainApi.login(data).then((data) => {
-  //     if (data) {
-  //       handlerLogin();
-  //       setCurrentUser(data);
-  //       history.push('/');
-  //     }
-  //   })
-  //     .catch(err => {
-  //       console.log(err);
-  //     })
-  // }
-
-  React.useEffect(() => {
     const path = location.pathname;
     const token = localStorage.getItem('token');
     if (token) {
@@ -128,8 +64,8 @@ function App() {
       });
   }
 
-  function login(email, password) {
-    mainApi.login(email, password)
+  function login(data) {
+    mainApi.login(data)
       .then((res) => {
         if (res.token) {
           localStorage.setItem('token', res.token);
@@ -163,15 +99,15 @@ function App() {
         console.log(err);
       });
   }
-  //
-  // function saveProfile(data) {
-  //   mainApi.saveProfile(data)
-  //     .then((profile) => {
-  //       setCurrentUser(profile);
-  //       setUpdateUserMessege('Данные успешно редактированы');
-  //     })
-  //     .catch((err) => console.log(err))
-  // }
+
+  function saveProfile(data) {
+    mainApi.saveProfile(data)
+      .then((profile) => {
+        setCurrentUser(profile);
+        setUpdateUserMessege('Данные успешно редактированы');
+      })
+      .catch((err) => console.log(err))
+  }
 
   function signOut() {
     localStorage.removeItem('token');
@@ -379,7 +315,7 @@ function App() {
           <ProtectedRoute path="/profile"
                           loggedIn={loggedIn}
                           component={Profile}
-                          onUpdateUser={handlerUpdateUser}
+                          onUpdateUser={saveProfile}
                           signOut={signOut}
                           messege={updateUserMessege}
           />
