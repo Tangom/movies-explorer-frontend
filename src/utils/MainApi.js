@@ -44,7 +44,7 @@ class MainApi {
   };
 
   // запрос на авторизацию пользователя
-  authorize(data) {
+  login(data) {
     return fetch(`${this._url}/signin`, {
       method: 'POST',
       headers: this._headers,
@@ -83,15 +83,15 @@ class MainApi {
   }
 
   // запрос пользователей
-  getUsers() {
-    return fetch(`${this._url}/users`, {
-      method: 'GET',
-      headers: this._headers,
-    })
-      .then((res) => { return res.json() })
-      .then(data => data)
-      .catch((err) => console.log(err));
-  }
+  // getUsers() {
+  //   return fetch(`${this._url}/users`, {
+  //     method: 'GET',
+  //     headers: this._headers,
+  //   })
+  //     .then((res) => { return res.json() })
+  //     .then(data => data)
+  //     .catch((err) => console.log(err));
+  // }
 
   // изменение данных пользователя
   setUserInfo(data) {

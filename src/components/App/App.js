@@ -222,7 +222,7 @@ function App() {
 
   const savedMovie = (data) => {
     setIsLoading(true);
-    mainApi.createMovie(data)
+    mainApi.getSaveMovies(data)
       .then((res) => {
         setSavedMovies([...savedMovies, {...res, id: res.movieId}])
       })
@@ -242,7 +242,7 @@ function App() {
   const deleteMovieCard = (movieId) => {
     const id = savedMovies.find(item => item.movieId === movieId)._id;
     setIsLoading(true);
-    mainApi.deleteMovies(id)
+    mainApi.deleteMovie(id)
       .then(() => {
         setSavedMovies(savedMovies.filter(item => item._id !== id));
       })
