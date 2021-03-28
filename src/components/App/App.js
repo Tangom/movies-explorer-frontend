@@ -87,7 +87,6 @@ function App() {
   function submitLogin(data) {
     mainApi.login(data).then((data) => {
       if (data) {
-        getCurrentUser();
         setCurrentUser(data);
         history.push('/');
       }
