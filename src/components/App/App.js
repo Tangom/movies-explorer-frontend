@@ -97,25 +97,25 @@ function App() {
   //     })
   // }
 
-  // React.useEffect(() => {
-  //   const path = location.pathname;
-  //   const token = localStorage.getItem('token');
-  //   if (token) {
-  //     mainApi.checkToken(token)
-  //       .then((res) => {
-  //         if (res) {
-  //           setLoggedIn(true);
-  //           getCurrentUser();
-  //           history.push(path);
-  //         }
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //         localStorage.removeItem('token')
-  //         history.push('/');
-  //       });
-  //   }
-  // }, []);
+  React.useEffect(() => {
+    const path = location.pathname;
+    const token = localStorage.getItem('token');
+    if (token) {
+      mainApi.checkToken(token)
+        .then((res) => {
+          if (res) {
+            setLoggedIn(true);
+            getCurrentUser();
+            history.push(path);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          localStorage.removeItem('token')
+          history.push('/');
+        });
+    }
+  }, []);
 
   function onRegister(data) {
     mainApi.register(data).then((data) => {
