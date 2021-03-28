@@ -44,6 +44,8 @@ function Login({onLogin}) {
     evt.preventDefault();
     onLogin(inputValue);
     setInputValue({
+      email: '',
+      password: '',
     })
   };
 
