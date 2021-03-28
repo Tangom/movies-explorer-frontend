@@ -33,18 +33,18 @@ function App() {
   const [updateUserMessege, setUpdateUserMessege] = React.useState('');
 
 
-  React.useEffect(() => {
-    if (localStorage.getItem('token') !== null) {
-      Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
-        .then(([userData, saveMoviesCards]) => {
-          setCurrentUser(userData);
-          setSavedMovies(saveMoviesCards);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   if (localStorage.getItem('token') !== null) {
+  //     Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
+  //       .then(([userData, saveMoviesCards]) => {
+  //         setCurrentUser(userData);
+  //         setSavedMovies(saveMoviesCards);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       })
+  //   }
+  // }, []);
 
   function handlerUpdateUser(data) {
     mainApi.setUserInfo(data)
@@ -97,25 +97,25 @@ function App() {
       })
   }
 
-  // React.useEffect(() => {
-  //   const path = location.pathname;
-  //   const token = localStorage.getItem('token');
-  //   if (token) {
-  //     mainApi.checkToken(token)
-  //       .then((res) => {
-  //         if (res) {
-  //           setLoggedIn(true);
-  //           getCurrentUser();
-  //           history.push(path);
-  //         }
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //         localStorage.removeItem('token')
-  //         history.push('/');
-  //       });
-  //   }
-  // }, []);
+  React.useEffect(() => {
+    const path = location.pathname;
+    const token = localStorage.getItem('token');
+    if (token) {
+      mainApi.checkToken(token)
+        .then((res) => {
+          if (res) {
+            setLoggedIn(true);
+            getCurrentUser();
+            history.push(path);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          localStorage.removeItem('token')
+          history.push('/');
+        });
+    }
+  }, []);
 
   function onRegister(data) {
     mainApi.register(data).then((data) => {
