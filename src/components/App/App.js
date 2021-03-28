@@ -134,6 +134,7 @@ function App() {
         if (res.token) {
           localStorage.setItem('token', res.token);
           setLoggedIn(true);
+          getCurrentUser();
           history.push('/movies');
         }
       })
