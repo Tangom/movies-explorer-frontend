@@ -35,7 +35,7 @@ function App() {
 
   React.useEffect(() => {
     if (localStorage.getItem('token') !== null) {
-      Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
+      Promise.all([mainApi.getUserInfo(), mainApi.getSaveMovies()])
         .then(([userData, saveMoviesCards]) => {
           setCurrentUser(userData);
           setSavedMovies(saveMoviesCards);
