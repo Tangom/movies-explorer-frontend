@@ -61,22 +61,22 @@ function App() {
     })
   }
 
-  // function handlerLogin() {
-  //   const token = localStorage.getItem('token');
-  //   if (token !== null) {
-  //     mainApi.getToken(token)
-  //       .then((data) => {
-  //         if (data) {
-  //           setCurrentUser(data);
-  //           setLoggedIn(true);
-  //           history.push('/movies');
-  //         }
-  //       }).catch((err) => {
-  //       console.log(err);
-  //       signOut();
-  //     })
-  //   } else signOut();
-  // }
+  function handlerLogin() {
+    const token = localStorage.getItem('token');
+    if (token !== null) {
+      mainApi.getToken(token)
+        .then((data) => {
+          if (data) {
+            setCurrentUser(data);
+            setLoggedIn(true);
+            history.push('/movies');
+          }
+        }).catch((err) => {
+        console.log(err);
+        signOut();
+      })
+    } else signOut();
+  }
 
   // сохранение токена для повторного входа
   // React.useEffect(() => {
@@ -87,6 +87,7 @@ function App() {
   function submitLogin(data) {
     mainApi.login(data).then((data) => {
       if (data) {
+        handlerLogin();
         setCurrentUser(data);
         history.push('/');
       }
