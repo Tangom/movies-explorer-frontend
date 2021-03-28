@@ -35,7 +35,7 @@ function App() {
 
   React.useEffect(() => {
     if (localStorage.getItem('token') !== null) {
-      Promise.all([mainApi.getUserInfo(), mainApi.getSaveMovies()])
+      Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
         .then(([userData, saveMoviesCards]) => {
           setCurrentUser(userData);
           setSavedMovies(saveMoviesCards);
@@ -142,7 +142,7 @@ function App() {
   //       console.log(err);
   //     })
   // }
-
+  //
   // function submitLogin({email, password}) {
   //   if (!email || !password) {
   //     return;
@@ -222,7 +222,7 @@ function App() {
 
   const savedMovie = (data) => {
     setIsLoading(true);
-    mainApi.getSaveMovies(data)
+    mainApi.createMovie(data)
       .then((res) => {
         setSavedMovies([...savedMovies, {...res, id: res.movieId}])
       })
@@ -242,7 +242,7 @@ function App() {
   const deleteMovieCard = (movieId) => {
     const id = savedMovies.find(item => item.movieId === movieId)._id;
     setIsLoading(true);
-    mainApi.deleteMovie(id)
+    mainApi.deleteMovies(id)
       .then(() => {
         setSavedMovies(savedMovies.filter(item => item._id !== id));
       })
