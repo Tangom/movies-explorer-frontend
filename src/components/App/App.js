@@ -111,7 +111,7 @@ function App() {
         .catch((err) => {
           console.log(err);
           localStorage.removeItem('token')
-          history.push('/');
+          history.push('/movies');
         });
     }
   }, []);
