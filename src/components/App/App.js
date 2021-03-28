@@ -188,11 +188,14 @@ function App() {
   }
 
   function handlerNavVisible() {
-    if (loggedIn) {
-      setIsNavVisible(true);
-    } else { setIsNavVisible(false) };
+    if (location.pathname === '/movies'
+      || location.pathname === '/saved-movies'
+      || location.pathname === '/profile') {
+      setIsNavVisible(false);
+    } else {
+      setIsNavVisible(true)
+    }
   }
-
 
   function handlerFootVisible() {
     if (location.pathname === '/movies'
