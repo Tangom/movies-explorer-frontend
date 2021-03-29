@@ -18,16 +18,16 @@ function Login({onLogin}) {
 
   const [isValid, setIsValid] = React.useState(true);
 
-  React.useEffect(() => {
-    if (
-      !inputError.email &&
-      !inputError.password
-    ) {
-      setIsValid(false)
-    } else {
-      setIsValid(true)
-    }
-  }, [inputError]);
+  // React.useEffect(() => {
+  //   if (
+  //     !inputError.email &&
+  //     !inputError.password
+  //   ) {
+  //     setIsValid(false)
+  //   } else {
+  //     setIsValid(true)
+  //   }
+  // }, [inputError]);
 
   function handlerEmail(evt) {
     setInputValue({...inputValue, email: evt.target.value})
@@ -40,9 +40,9 @@ function Login({onLogin}) {
     setInputError({...inputError, password: evt.target.value.length < 8})
   };
 
-  React.useEffect(() => {
-    const { email, password } = inputValue;
-  }, [inputValue]);
+  // React.useEffect(() => {
+  //   const { email, password } = inputValue;
+  // }, [inputValue]);
 
   function handleInputChange(evt) {
     const { name, value } = evt.target;
@@ -57,13 +57,7 @@ function Login({onLogin}) {
     onLogin(inputValue);
    };
 
-
-  React.useEffect(() => {
-    const { email, password } = inputValue;
-  }, [inputValue]);
-
-
-  return (
+    return (
     <section className="login">
       <Link to="/" className="login__logo"><img src={logo} alt="Логотип"/></Link>
       <h2 className="login__title">Рады видеть!</h2>
