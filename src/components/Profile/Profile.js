@@ -72,53 +72,116 @@ function Profile(onUpdateUser, signOut, message) {
   return (
     <section className="profile">
       <h1 className="profile__title">Привет, {currentUser.name}!</h1>
-      <form className="profile__form" name="profile" noValidate onSubmit={handleOnSubmit}>
+      <form className="profile__form" onSubmit={handleOnSubmit}>
         <label className="profile__label">Имя
-          <input className="profile__input" type="text" minLength="2" maxLength="30" required
-                 style={{color: inputError.name & inputDirty.name ? 'red' : 'white'}}
-                 value={inputValue.name}
-                 onBlur={(evt) => {
-                   blurHandler(evt)
-                 }}
-                 onChange={(evt) => {
-                   handleName(evt)
-                 }}
+          <input
+            className="profile__input profile__input_error"
+            type="text"
+            minLength="2"
+            maxLength="30"
+            onBlur={(e) => {
+              blurHandler(e)
+            }}
+            style={{ color: inputError.name & inputDirty.name ? 'red' : 'black' }}
+            onChange={(e) => {
+              handleName(e)
+            }}
+            name="name"
+            value={inputValue.name}
+            required
           />
         </label>
         <span
-          className={cn('profile__error', {'profile__error_visible': inputError.name & inputDirty.name})}>
+          className={cn('profile__error', { 'profile__error_visible': inputError.name & inputDirty.name })}>
                     Имя заполнено некорректно
-        </span>
-        <div className="profile__line"/>
+                </span>
+        <div className="profile__line" />
         <label className="profile__label">Почта
-          <input className="profile__input" type="Email" minLength="6" maxLength="40" required value={inputValue.email}
-                 style={{color: inputError.email & inputDirty.email ? 'red' : 'white'}}
-                 onBlur={(evt) => {
-                   blurHandler(evt)
-                 }}
-                 onChange={(evt) => {
-                   handleEmail(evt)
-                 }}
+          <input
+            className="profile__input"
+            type="Email"
+            onBlur={(e) => {
+              blurHandler(e)
+            }}
+            style={{ color: inputError.email & inputDirty.email ? 'red' : 'black' }}
+            onChange={(e) => {
+              handleEmail(e)
+            }}
+            name="email"
+            value={inputValue.email}
+            required
           />
         </label>
         <span
-          className={cn('profile__error', {'profile__error_visible': inputError.email & inputDirty.email})}>
+          className={cn('profile__error', { 'profile__error_visible': inputError.email & inputDirty.email })}>
                     Поле Email заполнено некорректно
-        </span>
-        <div className="profile__button-zone">
-                    <span className="profile__error profile__error_visible">{message}
                     </span>
-          <button type="submit" className={cn('profile__button', {'profile__button_disabled': isValid})}
-                  disabled={isValid}>
+        <div className="profile__button-zone">
+                    <span className="profile__error profile__error_visible"
+                    >{message}</span>
+          <button
+            type="submit"
+            className={cn('profile__button', { 'profile__button_disabled': isValid})}
+            disabled={isValid}>
             Редактировать
           </button>
-          <button type="button" className="profile__button profile__button_color" onClick={signOut}>
-            Выйти из аккаунта
+          <button
+            type="button"
+            className="profile__button profile__button_color"
+            onClick={signOut}
+          >Выйти из аккаунта
           </button>
         </div>
       </form>
     </section>
   )
 }
+
+//   return (
+//     <section className="profile">
+//       <h1 className="profile__title">Привет, {currentUser.name}!</h1>
+//       <form className="profile__form" name="profile" noValidate onSubmit={handleOnSubmit}>
+//         <label className="profile__label">Имя
+//           <input className="profile__input" type="text" minLength="2" maxLength="30" required
+//                  style={{color: inputError.name & inputDirty.name ? 'red' : 'white'}}
+//                  value={inputValue.name}
+//                  onBlur={(evt) => {
+//                    blurHandler(evt)
+//                  }}
+//                  onChange={(evt) => {
+//                    handleName(evt)
+//                  }}
+//           />
+//         </label>
+//         <span
+//           className={cn('profile__error', {'profile__error_visible': inputError.name & inputDirty.name})}>
+//                     Имя заполнено некорректно
+//         </span>
+//         <div className="profile__line"/>
+//         <label className="profile__label">Почта
+//           <input className="profile__input" type="Email" minLength="6" maxLength="40" required value={inputValue.email}
+//                  style={{color: inputError.email & inputDirty.email ? 'red' : 'white'}}
+//                  onBlur={(evt) => {
+//                    blurHandler(evt)
+//                  }}
+//                  onChange={(evt) => {
+//                    handleEmail(evt)
+//                  }}
+//           />
+//         </label>
+//         <span
+//           className={cn('profile__error', {'profile__error_visible': inputError.email & inputDirty.email})}>
+//                     Поле Email заполнено некорректно
+//         </span>
+//         <div className="profile__button-zone">
+//                     <span className="profile__error profile__error_visible">{message}
+//                     </span>
+//           <button type="submit" disabled={isValid} className={cn('profile__button', {'profile__button_disabled': isValid})}>Редактировать</button>
+//           <button type="button" className="profile__button profile__button_color" onClick={signOut}>Выйти из аккаунта</button>
+//         </div>
+//       </form>
+//     </section>
+//   )
+// }
 
 export default Profile;
