@@ -127,6 +127,10 @@ function App() {
       });
   }
 
+  React.useEffect(() => {
+    getCurrentUser();
+  }, [loggedIn]);
+
   function handlerNavVisible() {
     if (loggedIn) {
       setIsNavVisible(true);
