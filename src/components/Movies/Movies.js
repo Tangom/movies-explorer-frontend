@@ -41,6 +41,16 @@ function Movies({submitSearch, isLoading, deleteMovieCard, moviesCard, onSaveMov
     };
   }, []);
 
+  React.useEffect(() => {
+    const windowSize = window.innerWidth;
+    const sizePortion = getCount(windowSize);
+    setExtraPortion(sizePortion.extra);
+    const count = Math.min(moviesCard.length,sizePortion.first);
+    setRenderMovies(moviesCard.slice(0,count));
+    setCurrenCount(count);
+  }, [moviesCard])
+
+
   function onFilter(filterOn) {
     setShortFilm(filterOn);
   }
