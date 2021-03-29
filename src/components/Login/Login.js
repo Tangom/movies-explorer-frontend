@@ -18,16 +18,16 @@ function Login({onLogin}) {
 
   const [isValid, setIsValid] = React.useState(true);
 
-  // React.useEffect(() => {
-  //   if (
-  //     !inputError.email &&
-  //     !inputError.password
-  //   ) {
-  //     setIsValid(false)
-  //   } else {
-  //     setIsValid(true)
-  //   }
-  // }, [inputError]);
+  React.useEffect(() => {
+    if (
+      !inputError.email &&
+      !inputError.password
+    ) {
+      setIsValid(false)
+    } else {
+      setIsValid(true)
+    }
+  }, [inputError]);
 
   function handlerEmail(evt) {
     setInputValue({...inputValue, email: evt.target.value})
@@ -40,24 +40,17 @@ function Login({onLogin}) {
     setInputError({...inputError, password: evt.target.value.length < 8})
   };
 
-  // React.useEffect(() => {
-  //   const { email, password } = inputValue;
-  // }, [inputValue]);
-
-  function handleInputChange(evt) {
-    const { name, value } = evt.target;
-    setInputValue({
-      ...inputValue,
-      [name] : value
-    });
-  }
-
   function onSubmit(evt) {
     evt.preventDefault();
     onLogin(inputValue);
-   };
+    setInputValue({
+      email: '',
+      password: '',
+    })
+  };
 
-    return (
+
+  return (
     <section className="login">
       <Link to="/" className="login__logo"><img src={logo} alt="Логотип"/></Link>
       <h2 className="login__title">Рады видеть!</h2>
@@ -77,10 +70,9 @@ function Login({onLogin}) {
           placeholder="Email"
           min="6"
           max="40"
-          onChange={handleInputChange}
-          // onChange={(evt) => {
-          //   handlerEmail(evt)
-          // }}
+          onChange={(evt) => {
+            handlerEmail(evt)
+          }}
           error={inputError.email}
           value={inputValue.email}
         />
@@ -90,10 +82,9 @@ function Login({onLogin}) {
           placeholder="Пароль"
           min="8"
           max=""
-          onChange={handleInputChange}
-          // onChange={(evt) => {
-          //   handlerPassword(evt)
-          // }}
+          onChange={(evt) => {
+            handlerPassword(evt)
+          }}
           error={inputError.password}
           value={inputValue.password}
         />
