@@ -1,6 +1,7 @@
 import React from 'react';
 import {CurrentUserContext} from '../../context/CurrentUserContext';
 import cn from 'classnames';
+
 function Profile(onUpdateUser, signOut, ...props) {
 
   const [inputValue, setInputValue] = React.useState({
@@ -13,33 +14,33 @@ function Profile(onUpdateUser, signOut, ...props) {
     email: true,
   });
 
-  const [inputDirty, setInputDirty] = React.useState({
-    name: false,
-    email: false,
-  });
+  // const [inputDirty, setInputDirty] = React.useState({
+  //   name: false,
+  //   email: false,
+  // });
 
   const [isValid, setIsValid] = React.useState(true);
 
-  function blurHandler(evt) {
-    switch (evt.target.name) {
-      case 'name':
-        return setInputDirty({...inputDirty, name: true})
-      case 'email':
-        return setInputDirty({...inputDirty, email: true})
-      default:
-        console.log('Не соответствует ни одному из вариантов')
-    }
-  }
+  // function blurHandler(evt) {
+  //   switch (evt.target.name) {
+  //     case 'name':
+  //       return setInputDirty({...inputDirty, name: true})
+  //     case 'email':
+  //       return setInputDirty({...inputDirty, email: true})
+  //     default:
+  //       console.log('Не соответствует ни одному из вариантов')
+  //   }
+  // }
 
   const currentUser = React.useContext(CurrentUserContext);
 
-  // React.useEffect(() => {
-  //   setInputValue({
-  //     ...inputValue,
-  //     name: currentUser.name || '',
-  //     email: currentUser.email || ''
-  //   })
-  // }, [currentUser]);
+  React.useEffect(() => {
+    setInputValue({
+      ...inputValue,
+      name: currentUser.name || '',
+      email: currentUser.email || ''
+    })
+  }, [currentUser]);
 
   React.useEffect(() => {
     if (
@@ -75,40 +76,34 @@ function Profile(onUpdateUser, signOut, ...props) {
       <form className="profile__form" name="profile" noValidate onSubmit={handleOnSubmit}>
         <label className="profile__label">Имя
           <input className="profile__input" type="text" minLength="2" maxLength="30" required
-                 style={{color: inputDirty.name & inputError.name ? 'red' : 'white'}}
+                 style={{color: inputError.name ? 'red' : 'white'}}
                  value={inputValue.name}
-                 onBlur={(evt) => {
-                   blurHandler(evt)
-                 }}
                  onChange={(evt) => {
                    handleName(evt)
                  }}
           />
         </label>
         <span
-          className={cn('profile__error', { 'profile__error_visible': inputError.name & inputDirty.name })}>
+          className={cn('profile__error', {'profile__error_visible': inputError.name})}>
                     Имя заполнено некорректно
         </span>
         <div className="profile__line"/>
         <label className="profile__label">Почта
           <input className="profile__input" type="Email" minLength="6" maxLength="40" required value={inputValue.email}
-                 style={{color: inputDirty.email & inputError.email ? 'red' : 'white'}}
-                 onBlur={(evt) => {
-                   blurHandler(evt)
-                 }}
+                 style={{color: inputError.email ? 'red' : 'white'}}
                  onChange={(evt) => {
                    handleEmail(evt)
                  }}
           />
         </label>
         <span
-          className={cn('profile__error', { 'profile__error_visible': inputError.email & inputDirty.email })}>
+          className={cn('profile__error', {'profile__error_visible': inputError.email})}>
                     Поле Email заполнено некорректно
         </span>
         <div className="profile__button-zone">
                     <span className="profile__error profile__error_visible">{props.message}
                     </span>
-          <button type="submit" className={cn('profile__button', { 'profile__button_disabled': isValid})}
+          <button type="submit" className={cn('profile__button', {'profile__button_disabled': isValid})}
                   disabled={isValid}>>
             Редактировать
           </button>

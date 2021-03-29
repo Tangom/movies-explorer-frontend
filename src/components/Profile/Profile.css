@@ -50,10 +50,11 @@
     line-height: 12px;
     color: #EE3465;
     text-align: center;
+    visibility: hidden;
 }
 
 .profile__error_visible {
-    visibility: hidden;
+    visibility: visible;
 }
 
 .profile__line {
