@@ -31,7 +31,6 @@ function Profile(onUpdateUser, signOut, message) {
   //       console.log('Не соответствует ни одному из вариантов')
   //   }
   // }
-
   const currentUser = React.useContext(CurrentUserContext);
 
   React.useEffect(() => {
