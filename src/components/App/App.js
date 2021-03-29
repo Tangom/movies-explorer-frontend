@@ -99,6 +99,12 @@ function App() {
     })
   }
 
+  function signOut() {
+    localStorage.removeItem('token');
+    setLoggedIn(false);
+    history.push('/');
+  }
+
   React.useEffect(() => {
     const path = location.pathname;
     const token = localStorage.getItem('token');
@@ -169,6 +175,7 @@ function App() {
         console.log(err);
       });
   }
+
   // редактирование профиля
   // function handleSaveProfile(data) {
   //   mainApi.saveProfile(data)
@@ -179,19 +186,19 @@ function App() {
   //     .catch((err) => console.log(err))
   // }
 
-  function signOut() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('currentUser');
-    setLoggedIn(false);
-    setCurrentUser({})
-    localStorage.removeItem('initialMovies');
-    localStorage.removeItem('savedMovies');
-    setInitialMovies([]);
-    setSavedMovies([]);
-    setMoviesCards([]);
-    setFilterSavedMovies([]);
-    history.push('/');
-  }
+  // function signOut() {
+  //   localStorage.removeItem('token');
+  //   localStorage.removeItem('currentUser');
+  //   setLoggedIn(false);
+  //   setCurrentUser({})
+  //   localStorage.removeItem('initialMovies');
+  //   localStorage.removeItem('savedMovies');
+  //   setInitialMovies([]);
+  //   setSavedMovies([]);
+  //   setMoviesCards([]);
+  //   setFilterSavedMovies([]);
+  //   history.push('/');
+  // }
 
   function handlerNavVisible() {
     if (location.pathname === '/movies'
