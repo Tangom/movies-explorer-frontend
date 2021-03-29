@@ -1,3 +1,4 @@
+import React from 'react';
 import {useLocation} from "react-router";
 
 function MoviesCard({onSaveMovie, moviesCard, deleteMovieCard, onBookmarkClick}) {
