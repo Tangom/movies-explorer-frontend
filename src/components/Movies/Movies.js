@@ -55,15 +55,12 @@ function Movies({submitSearch, isLoading, deleteMovieCard, moviesCard, onSaveMov
     <section className="movies">
       <SearchForm onFilter={onFilter} submitSearch={submitSearch}/>
       {isLoading && <Preloader/>}
-      {
-      renderMovies.map((moviesCard) => (
       <MoviesCardList
         deleteMovieCard={deleteMovieCard}
         onBookmarkClick={onBookmarkClick}
         onSaveMovie={onSaveMovie}
+        renderMovies={renderMovies}
         moviesCard={shortFilm ? filterShortFilm(moviesCard) : moviesCard}/>
-      ))
-      }
       {moviesCard.length > 12 && <button className="movies__more" onClick={renderPortion}>Ещё</button>}
     </section>
   );
