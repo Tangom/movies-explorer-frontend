@@ -31,167 +31,186 @@ function App() {
   const [filterSavedMovies, setFilterSavedMovies] = React.useState([]);
   const [initialMovies, setInitialMovies] = React.useState([]);
   const [query, setQuery] = React.useState('');
-  const [updateUserMessege, setUpdateUserMessege] = React.useState('');
+  const [updateUserMessage, setUpdateUserMessage] = React.useState('');
 
+
+  React.useEffect(() => {
+    if (localStorage.getItem('token') !== null) {
+      Promise.all([mainApi.getUserInfo(), mainApi.getSaveMovies()])
+        .then(([userData, saveMoviesCards]) => {
+          setCurrentUser(userData);
+          setSavedMovies(saveMoviesCards);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
+  }, []);
+
+
+  function handlerLogin() {
+    const token = localStorage.getItem('token');
+    if (token !== null) {
+      mainApi.getToken(token)
+        .then((data) => {
+          if (data) {
+            setCurrentUser(data);
+            setLoggedIn(true);
+            history.push('/movies');
+          }
+        }).catch((err) => {
+        console.log(err);
+        signOut();
+      })
+    } else signOut();
+  }
+
+  // сохранение токена для повторного входа
+  React.useEffect(() => {
+    handlerLogin();
+  }, [loggedIn]);
+
+
+  function submitLogin(data) {
+    mainApi.login(data).then((data) => {
+      if (data) {
+        handlerLogin();
+        setCurrentUser(data);
+        history.push('/');
+      }
+    })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
+  function handlerUpdateUser(data) {
+    mainApi.setUserInfo(data)
+      .then((dataInfo) => {
+        if (dataInfo) {
+          setCurrentUser(dataInfo.user);
+          setUpdateUserMessage('Данные успешно редактированы');
+        } else {
+          setUpdateUserMessage('Произошла ошибка');
+        }
+      }).catch((err) => {
+
+      setUpdateUserMessage('Произошла ошибка');
+      console.log(err);
+    })
+  }
+
+  function onRegister(data) {
+    mainApi.register(data).then((data) => {
+      if (data) {
+        history.push('/signin');
+      }
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+
+  function signOut() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('initialMovies');
+    localStorage.removeItem('savedMovies');
+    setLoggedIn(false);
+    history.push('/');
+  }
 
   // React.useEffect(() => {
-  //   if (localStorage.getItem('token') !== null) {
-  //     Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
-  //       .then(([userData, saveMoviesCards]) => {
-  //         setCurrentUser(userData);
-  //         setSavedMovies(saveMoviesCards);
+  //   const path = location.pathname;
+  //   const token = localStorage.getItem('token');
+  //   if (token) {
+  //     mainApi.checkToken(token)
+  //       .then((res) => {
+  //         if (res) {
+  //           setLoggedIn(true);
+  //           getCurrentUser();
+  //           history.push(path);
+  //         }
   //       })
   //       .catch((err) => {
   //         console.log(err);
-  //       })
+  //         localStorage.removeItem('token')
+  //         history.push('/');
+  //       });
   //   }
   // }, []);
-
-
-  // function handlerLogin() {
-  //   const token = localStorage.getItem('token');
-  //   if (token !== null) {
-  //     mainApi.getToken(token)
-  //       .then((data) => {
-  //         if (data) {
-  //           setCurrentUser(data);
-  //           setLoggedIn(true);
-  //           history.push('/movies');
-  //         }
-  //       }).catch((err) => {
-  //       console.log(err);
-  //       signOut();
+  //
+  // function onRegister({name, email, password}) {
+  //   if (!name || !email || !password) {
+  //     return;
+  //   }
+  //   mainApi.register(name, email, password)
+  //     .then((res) => {
+  //       if (res) {
+  //         login(email, password);
+  //       }
   //     })
-  //   } else signOut();
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
   // }
-
-  // сохранение токена для повторного входа
-  // React.useEffect(() => {
-  //   handlerLogin();
-  // }, [loggedIn]);
   //
-  //
-  // function submitLogin(data) {
-  //   mainApi.login(data).then((data) => {
-  //     if (data) {
-  //       handlerLogin();
-  //       setCurrentUser(data);
-  //       history.push('/');
-  //     }
-  //   })
+  // function login(email, password) {
+  //   mainApi.login(email, password)
+  //     .then((res) => {
+  //       if (res.token) {
+  //         localStorage.setItem('token', res.token);
+  //         setLoggedIn(true);
+  //         getCurrentUser();
+  //         history.push('/movies');
+  //       }
+  //     })
   //     .catch(err => {
   //       console.log(err);
   //     })
   // }
   //
-  // function handlerUpdateUser(data) {
-  //   mainApi.setUserInfo(data)
-  //     .then((dataInfo) => {
-  //       if (dataInfo) {
-  //         setCurrentUser(dataInfo.user);
-  //         setUpdateUserMessege('Данные успешно редактированы');
-  //       } else {
-  //         setUpdateUserMessege('Произошла ошибка');
-  //       }
-  //     }).catch((err) => {
-  //     setUpdateUserMessege('Произошла ошибка');
-  //     console.log(err);
-  //   })
+  // function submitLogin({email, password}) {
+  //   if (!email || !password) {
+  //     return;
+  //   }
+  //   login(email, password);
   // }
-
-  React.useEffect(() => {
-    const path = location.pathname;
-    const token = localStorage.getItem('token');
-    if (token) {
-      mainApi.checkToken(token)
-        .then((res) => {
-          if (res) {
-            setLoggedIn(true);
-            getCurrentUser();
-            history.push(path);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          localStorage.removeItem('token')
-          history.push('/');
-        });
-    }
-  }, []);
-
-  function onRegister({name, email, password}) {
-    if (!name || !email || !password) {
-      return;
-    }
-    mainApi.register(name, email, password)
-      .then((res) => {
-        if (res) {
-          login(email, password);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  function login(email, password) {
-    mainApi.login(email, password)
-      .then((res) => {
-        if (res.token) {
-          localStorage.setItem('token', res.token);
-          setLoggedIn(true);
-          getCurrentUser();
-          history.push('/movies');
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  }
-
-  function submitLogin({email, password}) {
-    if (!email || !password) {
-      return;
-    }
-    login(email, password);
-  }
-
-  function getCurrentUser() {
-    const token = localStorage.getItem('token');
-    mainApi.getCurrentUser(token)
-      .then((res) => {
-        if (res) {
-          setCurrentUser(res)
-          localStorage.setItem('currentUser', JSON.stringify(res));
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-  // редактирование профиля
-  function handleSaveProfile(data) {
-    mainApi.saveProfile(data)
-      .then((profile) => {
-        setCurrentUser(profile);
-        setUpdateUserMessege('Профиль успешно обновлен');
-      })
-      .catch((err) => console.log(err))
-  }
-
-  function signOut() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('currentUser');
-    setLoggedIn(false);
-    setCurrentUser({})
-    localStorage.removeItem('initialMovies');
-    localStorage.removeItem('savedMovies');
-    setInitialMovies([]);
-    setSavedMovies([]);
-    setMoviesCards([]);
-    setFilterSavedMovies([]);
-    history.push('/');
-  }
+  //
+  // function getCurrentUser() {
+  //   const token = localStorage.getItem('token');
+  //   mainApi.getCurrentUser(token)
+  //     .then((res) => {
+  //       if (res) {
+  //         setCurrentUser(res)
+  //         localStorage.setItem('currentUser', JSON.stringify(res));
+  //       }
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // }
+  // // редактирование профиля
+  // function handleSaveProfile(data) {
+  //   mainApi.saveProfile(data)
+  //     .then((profile) => {
+  //       setCurrentUser(profile);
+  //       setUpdateUserMessege('Профиль успешно обновлен');
+  //     })
+  //     .catch((err) => console.log(err))
+  // }
+  //
+  // function signOut() {
+  //   localStorage.removeItem('token');
+  //   localStorage.removeItem('currentUser');
+  //   setLoggedIn(false);
+  //   setCurrentUser({})
+  //   localStorage.removeItem('initialMovies');
+  //   localStorage.removeItem('savedMovies');
+  //   setInitialMovies([]);
+  //   setSavedMovies([]);
+  //   setMoviesCards([]);
+  //   setFilterSavedMovies([]);
+  //   history.push('/');
+  // }
 
   function handlerNavVisible() {
     if (location.pathname === '/movies'
@@ -228,7 +247,7 @@ function App() {
 
   const savedMovie = (data) => {
     setIsLoading(true);
-    mainApi.createMovie(data)
+    mainApi.saveMovie(data)
       .then((res) => {
         setSavedMovies([...savedMovies, {...res, id: res.movieId}])
       })
@@ -248,7 +267,7 @@ function App() {
   const deleteMovieCard = (movieId) => {
     const id = savedMovies.find(item => item.movieId === movieId)._id;
     setIsLoading(true);
-    mainApi.deleteMovies(id)
+    mainApi.deleteMovie(id)
       .then(() => {
         setSavedMovies(savedMovies.filter(item => item._id !== id));
       })
@@ -297,7 +316,7 @@ function App() {
   }
 
   function getSavedMovies() {
-    mainApi.getMovies()
+    mainApi.getSaveMovies()
       .then((data) => {
         const savedArray = data.map((item) => {
           return {...item, id: item.movieId}
@@ -385,9 +404,9 @@ function App() {
           <ProtectedRoute path="/profile"
                           loggedIn={loggedIn}
                           component={Profile}
-                          onUpdateUser={handleSaveProfile}
+                          onUpdateUser={handlerUpdateUser}
                           signOut={signOut}
-                          messege={updateUserMessege}
+                          message={updateUserMessage}
           />
 
           <ProtectedRoute path="/movies"
