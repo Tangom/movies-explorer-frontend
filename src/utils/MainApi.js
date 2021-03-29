@@ -4,7 +4,6 @@ class MainApi {
     this._headers = data.headers;
   }
 
-
   _showErrow(res) {
     if (res.ok) {
       return res.json();
