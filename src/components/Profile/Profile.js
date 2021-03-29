@@ -14,23 +14,23 @@ function Profile(onUpdateUser, signOut, message) {
     email: true,
   });
 
-  // const [inputDirty, setInputDirty] = React.useState({
-  //   name: false,
-  //   email: false,
-  // });
+  const [inputDirty, setInputDirty] = React.useState({
+    name: false,
+    email: false,
+  });
 
   const [isValid, setIsValid] = React.useState(true);
 
-  // function blurHandler(evt) {
-  //   switch (evt.target.name) {
-  //     case 'name':
-  //       return setInputDirty({...inputDirty, name: true})
-  //     case 'email':
-  //       return setInputDirty({...inputDirty, email: true})
-  //     default:
-  //       console.log('Не соответствует ни одному из вариантов')
-  //   }
-  // }
+  function blurHandler(evt) {
+    switch (evt.target.name) {
+      case 'name':
+        return setInputDirty({...inputDirty, name: true})
+      case 'email':
+        return setInputDirty({...inputDirty, email: true})
+      default:
+        console.log('Не соответствует ни одному из вариантов')
+    }
+  }
   const currentUser = React.useContext(CurrentUserContext);
 
   React.useEffect(() => {
@@ -75,28 +75,34 @@ function Profile(onUpdateUser, signOut, message) {
       <form className="profile__form" name="profile" noValidate onSubmit={handleOnSubmit}>
         <label className="profile__label">Имя
           <input className="profile__input" type="text" minLength="2" maxLength="30" required
-                 style={{color: inputError.name ? 'red' : 'white'}}
+                 style={{color: inputError.name & inputDirty.name ? 'red' : 'white'}}
                  value={inputValue.name}
+                 onBlur={(evt) => {
+                   blurHandler(evt)
+                 }}
                  onChange={(evt) => {
                    handleName(evt)
                  }}
           />
         </label>
         <span
-          className={cn('profile__error', {'profile__error_visible': inputError.name})}>
+          className={cn('profile__error', {'profile__error_visible': inputError.name & inputDirty.name})}>
                     Имя заполнено некорректно
         </span>
         <div className="profile__line"/>
         <label className="profile__label">Почта
           <input className="profile__input" type="Email" minLength="6" maxLength="40" required value={inputValue.email}
-                 style={{color: inputError.email ? 'red' : 'white'}}
+                 style={{color: inputError.email & inputDirty.email ? 'red' : 'white'}}
+                 onBlur={(evt) => {
+                   blurHandler(evt)
+                 }}
                  onChange={(evt) => {
                    handleEmail(evt)
                  }}
           />
         </label>
         <span
-          className={cn('profile__error', {'profile__error_visible': inputError.email})}>
+          className={cn('profile__error', {'profile__error_visible': inputError.email & inputDirty.email})}>
                     Поле Email заполнено некорректно
         </span>
         <div className="profile__button-zone">
