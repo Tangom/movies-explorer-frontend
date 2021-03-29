@@ -127,14 +127,11 @@ function App() {
       });
   }
 
-  React.useEffect(() => {
-    getCurrentUser();
-  }, [loggedIn]);
 
   function handlerNavVisible() {
     if (loggedIn) {
-      setIsNavVisible(true);
-    } else { setIsNavVisible(false) };
+      setIsNavVisible(false);
+    } else { setIsNavVisible(true) };
   }
   // function handlerNavVisible() {
   //   if (location.pathname === '/movies'
