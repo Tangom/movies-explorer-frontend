@@ -110,8 +110,6 @@ function Profile(onUpdateUser, signOut, message) {
             Выйти из аккаунта
           </button>
         </div>
-
-
       </form>
     </section>
   )
