@@ -65,17 +65,17 @@ class MainApi {
     }))
   }
 
-  setUserInfo(data) {
-    const token = localStorage.getItem('token');
-    return this._getResponseData(fetch(`${this._url}/users/me`, {
-      method: 'PATCH',
-      headers: {
-        ...this._headers,
-        "Authorization" : `Bearer ${token}`
-      },
-      body: JSON.stringify(data),
-    }))
-  }
+  // setUserInfo(data) {
+  //   const token = localStorage.getItem('token');
+  //   return this._getResponseData(fetch(`${this._url}/users/me`, {
+  //     method: 'PATCH',
+  //     headers: {
+  //       ...this._headers,
+  //       "Authorization" : `Bearer ${token}`
+  //     },
+  //     body: JSON.stringify(data),
+  //   }))
+  // }
 
 saveProfile(data) {
     const token = localStorage.getItem('token');
