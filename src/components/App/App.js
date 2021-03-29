@@ -20,10 +20,11 @@ function App() {
   const history = useHistory();
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
+  const [isLoading, setIsLoading] = React.useState(false);
+
   const [isNavVisible, setIsNavVisible] = React.useState(false);
   const [isFootVisible, setIsFootVisible] = React.useState(false);
   const [isNavOpen, setIsNavOpen] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(false);
 
   const [moviesCards, setMoviesCards] = React.useState([]);
   const [savedMovies, setSavedMovies] = React.useState([]);
@@ -47,56 +48,56 @@ function App() {
   // }, []);
 
 
-  function handlerLogin() {
-    const token = localStorage.getItem('token');
-    if (token !== null) {
-      mainApi.getToken(token)
-        .then((data) => {
-          if (data) {
-            setCurrentUser(data);
-            setLoggedIn(true);
-            history.push('/movies');
-          }
-        }).catch((err) => {
-        console.log(err);
-        signOut();
-      })
-    } else signOut();
-  }
+  // function handlerLogin() {
+  //   const token = localStorage.getItem('token');
+  //   if (token !== null) {
+  //     mainApi.getToken(token)
+  //       .then((data) => {
+  //         if (data) {
+  //           setCurrentUser(data);
+  //           setLoggedIn(true);
+  //           history.push('/movies');
+  //         }
+  //       }).catch((err) => {
+  //       console.log(err);
+  //       signOut();
+  //     })
+  //   } else signOut();
+  // }
 
   // сохранение токена для повторного входа
   // React.useEffect(() => {
   //   handlerLogin();
   // }, [loggedIn]);
-
-
-  function submitLogin(data) {
-    mainApi.login(data).then((data) => {
-      if (data) {
-        handlerLogin();
-        setCurrentUser(data);
-        history.push('/');
-      }
-    })
-      .catch(err => {
-        console.log(err);
-      })
-  }
-
-  function handlerUpdateUser(data) {
-    mainApi.setUserInfo(data)
-      .then((dataInfo) => {
-        if (dataInfo) {
-          setCurrentUser(dataInfo.user);
-          setUpdateUserMessege('Данные успешно редактированы');
-        } else {
-          setUpdateUserMessege('Произошла ошибка');
-        }
-      }).catch((err) => {
-      setUpdateUserMessege('Произошла ошибка');
-      console.log(err);
-    })
-  }
+  //
+  //
+  // function submitLogin(data) {
+  //   mainApi.login(data).then((data) => {
+  //     if (data) {
+  //       handlerLogin();
+  //       setCurrentUser(data);
+  //       history.push('/');
+  //     }
+  //   })
+  //     .catch(err => {
+  //       console.log(err);
+  //     })
+  // }
+  //
+  // function handlerUpdateUser(data) {
+  //   mainApi.setUserInfo(data)
+  //     .then((dataInfo) => {
+  //       if (dataInfo) {
+  //         setCurrentUser(dataInfo.user);
+  //         setUpdateUserMessege('Данные успешно редактированы');
+  //       } else {
+  //         setUpdateUserMessege('Произошла ошибка');
+  //       }
+  //     }).catch((err) => {
+  //     setUpdateUserMessege('Произошла ошибка');
+  //     console.log(err);
+  //   })
+  // }
 
   React.useEffect(() => {
     const path = location.pathname;
@@ -113,43 +114,47 @@ function App() {
         .catch((err) => {
           console.log(err);
           localStorage.removeItem('token')
-          history.push('/movies');
+          history.push('/');
         });
     }
   }, []);
 
-  function onRegister(data) {
-    mainApi.register(data).then((data) => {
-      if (data) {
-        history.push('/signin');
-      }
-    })
+  function onRegister({name, email, password}) {
+    if (!name || !email || !password) {
+      return;
+    }
+    mainApi.register(name, email, password)
+      .then((res) => {
+        if (res) {
+          login(email, password);
+        }
+      })
       .catch((err) => {
         console.log(err);
       });
   }
 
-  // function login(email, password) {
-  //   mainApi.login(email, password)
-  //     .then((res) => {
-  //       if (res.token) {
-  //         localStorage.setItem('token', res.token);
-  //         setLoggedIn(true);
-  //         getCurrentUser();
-  //         history.push('/movies');
-  //       }
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     })
-  // }
-  //
-  // function submitLogin({email, password}) {
-  //   if (!email || !password) {
-  //     return;
-  //   }
-  //   login(email, password);
-  // }
+  function login(email, password) {
+    mainApi.login(email, password)
+      .then((res) => {
+        if (res.token) {
+          localStorage.setItem('token', res.token);
+          setLoggedIn(true);
+          getCurrentUser();
+          history.push('/movies');
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
+  function submitLogin({email, password}) {
+    if (!email || !password) {
+      return;
+    }
+    login(email, password);
+  }
 
   function getCurrentUser() {
     const token = localStorage.getItem('token');
@@ -157,22 +162,22 @@ function App() {
       .then((res) => {
         if (res) {
           setCurrentUser(res)
-          localStorage.setItem('currentUser', JSON.stringify(res))
+          localStorage.setItem('currentUser', JSON.stringify(res));
         }
       })
       .catch(err => {
         console.log(err);
       });
   }
-
-  // function saveProfile(data) {
-  //   mainApi.saveProfile(data)
-  //     .then((profile) => {
-  //       setCurrentUser(profile);
-  //       setUpdateUserMessege('Данные успешно редактированы');
-  //     })
-  //     .catch((err) => console.log(err))
-  // }
+  // редактирование профиля
+  function handleSaveProfile(data) {
+    mainApi.saveProfile(data)
+      .then((profile) => {
+        setCurrentUser(profile);
+        setUpdateUserMessege('Профиль успешно обновлен');
+      })
+      .catch((err) => console.log(err))
+  }
 
   function signOut() {
     localStorage.removeItem('token');
@@ -380,7 +385,7 @@ function App() {
           <ProtectedRoute path="/profile"
                           loggedIn={loggedIn}
                           component={Profile}
-                          onUpdateUser={handlerUpdateUser}
+                          onUpdateUser={handleSaveProfile}
                           signOut={signOut}
                           messege={updateUserMessege}
           />

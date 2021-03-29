@@ -4,129 +4,63 @@ class MainApi {
     this._headers = data.headers;
   }
 
-  _showErrow(res) {
-    if (res.ok) {
-      return res.json();
-    }
-    // если ошибка, отклоняем промис
-    Promise.reject(new Error(`Ошибка: ${res.status}`));
-  }
-
-  getUserInfo() {
-    return fetch(`${this._url}/users/me`, {
-      method: 'GET',
-      headers:{
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    }).then((res) => this._showErrow(res));
-  }
-
-  setUserInfo(data) {
-    return fetch(`${this._url}/users/me`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify(data),
-    }).then((res) => this._showErrow(res));
-  }
-
-  getToken() {
-    return fetch(`${this._url}/users/me`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    })
-      .then((res) => { return res.json() })
-      .then(data => data)
-      .catch((err) => console.log(err));
-  }
-
-  login(data) {
-    return fetch(`${this._url}/signin`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify(data)
-    })
-      .then((res) => { return res.json() })
-      .then((data) => {
-        if (data.token) {
-          // сохранение токена в localStorage
-          localStorage.setItem('token', data.token);
-          return data;
-        } else {
-          return;
-        }
-      })
-      .catch((err) => console.log(err));
-  };
-
   _getResponseData(response) {
     return response.then((res) => {
       if (res.ok) {
         return res.json();
       }
-      if (res.status === 409 || res.status === 404 || res.status === 400) {
+      if (res.status === 409 || res.status === 404 || res.status === 400 ) {
         return Promise.reject({
           status: res.status
         })
       }
-      return Promise.reject(new Error(`Ошибка: ${res.status}`));
+      return Promise.reject(new Error(`Ошибка получения данных: ${res.status} ${res.statusText}`));
     })
   }
 
-  register(data) {
+  // регистрация
+  register(name, email, password) {
     return this._getResponseData(fetch(`${this._url}/signup`, {
       method: 'POST',
+      headers: this._headers,
       body: JSON.stringify({
-        "name": data.name,
-        "email": data.email,
-        "password": data.password
-      }),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
+        "name": name,
+        "email": email,
+        "password": password
+      })
     }))
   }
 
-  // login(email, password) {
-  //   return this._getResponseData(fetch(`${this._url}/signin`, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       "email": email,
-  //       "password": password
-  //     })
-  //   }))
-  // }
+  //авторизация
+  login(email, password) {
+    return this._getResponseData(fetch(`${this._url}/signin`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        "email": email,
+        "password": password
+      })
+    }))
+  }
 
+  //провека токена
   checkToken(token) {
     return this._getResponseData(fetch(`${this._url}/users/me`, {
       method: 'GET',
       headers: {
         ...this._headers,
-        "Authorization": `Bearer ${token}`
+        "Authorization" : `Bearer ${token}`
       }
     }))
   }
 
+  //данные пользователя
   getCurrentUser(token) {
     return this._getResponseData(fetch(`${this._url}/users/me`, {
       method: 'GET',
       headers: {
         ...this._headers,
-        "Authorization": `Bearer ${token}`
+        "Authorization" : `Bearer ${token}`
       }
     }))
   }
@@ -137,7 +71,7 @@ class MainApi {
       method: 'PATCH',
       headers: {
         ...this._headers,
-        "Authorization": `Bearer ${token}`
+        "Authorization" : `Bearer ${token}`
       },
       body: JSON.stringify({
         name: data.name,
@@ -145,6 +79,7 @@ class MainApi {
       })
     }))
   }
+
 
   getMovies() {
     const token = localStorage.getItem('token');
@@ -197,9 +132,7 @@ const mainApi = new MainApi({
   url: 'https://api.tango.students.nomoredomains.icu',
   headers: {
     'Content-Type': 'application/json',
-    authorization: `Bearer ${localStorage.getItem('token')}`
-  },
-  credentials: 'include',
+  }
 })
 
 export default mainApi;
