@@ -109,7 +109,7 @@ function Profile(onUpdateUser, signOut, message) {
                     <span className="profile__error profile__error_visible">{message}
                     </span>
           <button type="submit" className={cn('profile__button', {'profile__button_disabled': isValid})}
-                  disabled={isValid}>>
+                  disabled={isValid}>
             Редактировать
           </button>
           <button type="button" className="profile__button profile__button_color" onClick={signOut}>
