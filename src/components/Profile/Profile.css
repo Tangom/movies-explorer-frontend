@@ -84,6 +84,7 @@
     width: 410px;
     height: 16px;
     margin-top: 16px;
+    color: #fff;
 }
 
 .profile__button:hover {
@@ -97,7 +98,7 @@
 }
 
 .profile__button_disabled {
-    color: #fff;
+    color: black;
 }
 
 @media all and (max-width: 1190px) {
