@@ -1,6 +1,6 @@
 import React from 'react';
 import {CurrentUserContext} from '../../context/CurrentUserContext';
-
+import cn from 'classnames';
 function Profile(onUpdateUser, signOut, ...props) {
 
   const [inputValue, setInputValue] = React.useState({
@@ -75,7 +75,7 @@ function Profile(onUpdateUser, signOut, ...props) {
       <form className="profile__form" name="profile" noValidate onSubmit={handleOnSubmit}>
         <label className="profile__label">Имя
           <input className="profile__input" type="text" minLength="2" maxLength="30" required
-                 style={{color: inputDirty.name && inputError.name ? 'red' : 'white'}}
+                 style={{color: inputDirty.name & inputError.name ? 'red' : 'white'}}
                  value={inputValue.name}
                  onBlur={(evt) => {
                    blurHandler(evt)
@@ -86,13 +86,13 @@ function Profile(onUpdateUser, signOut, ...props) {
           />
         </label>
         <span
-          className={`profile__error ${inputDirty.name && inputError.name && 'profile__error_visible'}`}>
+          className={cn('profile__error', { 'profile__error_visible': inputError.name & inputDirty.name })}>
                     Имя заполнено некорректно
         </span>
         <div className="profile__line"/>
         <label className="profile__label">Почта
           <input className="profile__input" type="Email" minLength="6" maxLength="40" required value={inputValue.email}
-                 style={{color: inputDirty.email && inputError.email ? 'red' : 'white'}}
+                 style={{color: inputDirty.email & inputError.email ? 'red' : 'white'}}
                  onBlur={(evt) => {
                    blurHandler(evt)
                  }}
@@ -102,13 +102,13 @@ function Profile(onUpdateUser, signOut, ...props) {
           />
         </label>
         <span
-          className={`profile__error ${inputDirty.email && inputError.email && 'profile__error_visible'}`}>
+          className={cn('profile__error', { 'profile__error_visible': inputError.email & inputDirty.email })}>
                     Поле Email заполнено некорректно
         </span>
         <div className="profile__button-zone">
                     <span className="profile__error profile__error_visible">{props.message}
                     </span>
-          <button type="submit" className={`profile__button ${isValid && 'profile__button_disabled'}`}
+          <button type="submit" className={cn('profile__button', { 'profile__button_disabled': isValid})}
                   disabled={isValid}>>
             Редактировать
           </button>
