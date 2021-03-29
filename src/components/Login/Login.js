@@ -40,10 +40,27 @@ function Login({onLogin}) {
     setInputError({...inputError, password: evt.target.value.length < 8})
   };
 
+  React.useEffect(() => {
+    const { email, password } = inputValue;
+  }, [inputValue]);
+
+  function handleInputChange(evt) {
+    const { name, value } = evt.target;
+    setInputValue({
+      ...inputValue,
+      [name] : value
+    });
+  }
+
   function onSubmit(evt) {
     evt.preventDefault();
     onLogin(inputValue);
    };
+
+
+  React.useEffect(() => {
+    const { email, password } = inputValue;
+  }, [inputValue]);
 
 
   return (
@@ -66,9 +83,10 @@ function Login({onLogin}) {
           placeholder="Email"
           min="6"
           max="40"
-          onChange={(evt) => {
-            handlerEmail(evt)
-          }}
+          onChange={handleInputChange}
+          // onChange={(evt) => {
+          //   handlerEmail(evt)
+          // }}
           error={inputError.email}
           value={inputValue.email}
         />
@@ -78,9 +96,10 @@ function Login({onLogin}) {
           placeholder="Пароль"
           min="8"
           max=""
-          onChange={(evt) => {
-            handlerPassword(evt)
-          }}
+          onChange={handleInputChange}
+          // onChange={(evt) => {
+          //   handlerPassword(evt)
+          // }}
           error={inputError.password}
           value={inputValue.password}
         />
