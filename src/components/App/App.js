@@ -84,20 +84,20 @@ function App() {
   //     })
   // }
   //
-  // function handlerUpdateUser(data) {
-  //   mainApi.setUserInfo(data)
-  //     .then((dataInfo) => {
-  //       if (dataInfo) {
-  //         setCurrentUser(dataInfo.user);
-  //         setUpdateUserMessege('Данные успешно редактированы');
-  //       } else {
-  //         setUpdateUserMessege('Произошла ошибка');
-  //       }
-  //     }).catch((err) => {
-  //     setUpdateUserMessege('Произошла ошибка');
-  //     console.log(err);
-  //   })
-  // }
+  function handlerUpdateUser(data) {
+    mainApi.setUserInfo(data)
+      .then((dataInfo) => {
+        if (dataInfo) {
+          setCurrentUser(dataInfo.user);
+          setUpdateUserMessege('Данные успешно редактированы');
+        } else {
+          setUpdateUserMessege('Произошла ошибка');
+        }
+      }).catch((err) => {
+      setUpdateUserMessege('Произошла ошибка');
+      console.log(err);
+    })
+  }
 
   React.useEffect(() => {
     const path = location.pathname;
@@ -170,14 +170,14 @@ function App() {
       });
   }
   // редактирование профиля
-  function handleSaveProfile(data) {
-    mainApi.saveProfile(data)
-      .then((profile) => {
-        setCurrentUser(profile);
-        setUpdateUserMessege('Профиль успешно обновлен');
-      })
-      .catch((err) => console.log(err))
-  }
+  // function handleSaveProfile(data) {
+  //   mainApi.saveProfile(data)
+  //     .then((profile) => {
+  //       setCurrentUser(profile);
+  //       setUpdateUserMessege('Профиль успешно обновлен');
+  //     })
+  //     .catch((err) => console.log(err))
+  // }
 
   function signOut() {
     localStorage.removeItem('token');
@@ -385,7 +385,7 @@ function App() {
           <ProtectedRoute path="/profile"
                           loggedIn={loggedIn}
                           component={Profile}
-                          onUpdateUser={handleSaveProfile}
+                          onUpdateUser={handlerUpdateUser}
                           signOut={signOut}
                           messege={updateUserMessege}
           />
