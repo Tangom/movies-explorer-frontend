@@ -128,14 +128,19 @@ function App() {
   }
 
   function handlerNavVisible() {
-    if (location.pathname === '/movies'
-      || location.pathname === '/saved-movies'
-      || location.pathname === '/profile') {
-      setIsNavVisible(false);
-    } else {
-      setIsNavVisible(true)
-    }
+    if (loggedIn) {
+      setIsNavVisible(true);
+    } else { setIsNavVisible(false) };
   }
+  // function handlerNavVisible() {
+  //   if (location.pathname === '/movies'
+  //     || location.pathname === '/saved-movies'
+  //     || location.pathname === '/profile') {
+  //     setIsNavVisible(false);
+  //   } else {
+  //     setIsNavVisible(true)
+  //   }
+  // }
 
   function handlerFootVisible() {
     if (location.pathname === '/movies'
