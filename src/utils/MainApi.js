@@ -65,7 +65,19 @@ class MainApi {
     }))
   }
 
-  setUserInfo(data) {
+  // setUserInfo(data) {
+  //   const token = localStorage.getItem('token');
+  //   return this._getResponseData(fetch(`${this._url}/users/me`, {
+  //     method: 'PATCH',
+  //     headers: {
+  //       ...this._headers,
+  //       "Authorization" : `Bearer ${token}`
+  //     },
+  //     body: JSON.stringify(data),
+  //   }))
+  // }
+
+saveProfile(data) {
     const token = localStorage.getItem('token');
     return this._getResponseData(fetch(`${this._url}/users/me`, {
       method: 'PATCH',
@@ -73,24 +85,12 @@ class MainApi {
         ...this._headers,
         "Authorization" : `Bearer ${token}`
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        name: data.name,
+        email: data.email
+      })
     }))
   }
-
-// saveProfile(data) {
-//     const token = localStorage.getItem('token');
-//     return this._getResponseData(fetch(`${this._url}/users/me`, {
-//       method: 'PATCH',
-//       headers: {
-//         ...this._headers,
-//         "Authorization" : `Bearer ${token}`
-//       },
-//       body: JSON.stringify({
-//         name: data.name,
-//         email: data.email
-//       })
-//     }))
-//   }
 
 
   getMovies() {
