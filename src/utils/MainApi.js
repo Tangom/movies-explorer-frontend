@@ -92,7 +92,6 @@ saveProfile(data) {
     }))
   }
 
-
   getMovies() {
     const token = localStorage.getItem('token');
     return this._getResponseData(fetch(`${this._url}/movies`, {

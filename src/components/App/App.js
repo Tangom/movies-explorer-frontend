@@ -31,7 +31,7 @@ function App() {
   const [filterSavedMovies, setFilterSavedMovies] = React.useState([]);
   const [initialMovies, setInitialMovies] = React.useState([]);
   const [query, setQuery] = React.useState('');
-  const [updateUserMessege, setUpdateUserMessege] = React.useState('');
+  const [updateUserMessage, setUpdateUserMessage] = React.useState('');
 
 
   // React.useEffect(() => {
@@ -100,9 +100,11 @@ function App() {
   // }
 
   function signOut() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('currentUser');
+      setLoggedIn(false);
+      setCurrentUser({})
     history.push('/');
-    // localStorage.removeItem('token');
-    setLoggedIn(false);
   }
 
   React.useEffect(() => {
@@ -181,9 +183,9 @@ function App() {
     mainApi.saveProfile(data)
       .then((profile) => {
         setCurrentUser(profile);
-        setUpdateUserMessege('Профиль успешно обновлен');
+        setUpdateUserMessage('Профиль успешно обновлен');
       }).catch((err) => {
-      setUpdateUserMessege('Произошла ошибка');
+      setUpdateUserMessage('Произошла ошибка');
       console.log(err);
     })
   }
@@ -396,7 +398,7 @@ function App() {
                           component={Profile}
                           onUpdateUser={handlerUpdateUser}
                           signOut={signOut}
-                          messege={updateUserMessege}
+                          message={updateUserMessage}
           />
 
           <ProtectedRoute path="/movies"
