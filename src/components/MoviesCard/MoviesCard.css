@@ -64,6 +64,9 @@
 .movies-card__button:active {
     background: no-repeat center url('../../images/flag-active.svg')
 }
+.movies-card__button_save{
+    background: no-repeat center url('../../images/flag-active.svg')
+}
 
 .movies-card__button_delete {
     background: no-repeat center url('../../images/delete.svg')

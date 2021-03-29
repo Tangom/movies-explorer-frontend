@@ -29,7 +29,7 @@ function MoviesCard({onSaveMovie, moviesCard, deleteMovieCard, onBookmarkClick})
           <p className="movies-card__duration">{duration(moviesCard.duration)}</p>
         </div>
         <button
-          className={`movies-card__button ${(location.pathname === "/saved-movies" ? "movies-card__button_delete" : "")}`}
+          className={`movies-card__button ${isSave ? "movies-card__button_save" : ''}${(location.pathname === "/saved-movies" ? "movies-card__button_delete" : "")}`}
           type="button" onClick={location.pathname === "/saved-movies" ?handleOnDelete:handleOnClick}/>
       </div>
       <a href={moviesCard.trailer} target="_blank">
