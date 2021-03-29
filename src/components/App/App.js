@@ -84,20 +84,20 @@ function App() {
   //     })
   // }
   //
-  // function handlerUpdateUser(data) {
-  //   mainApi.setUserInfo(data)
-  //     .then((dataInfo) => {
-  //       if (dataInfo) {
-  //         setCurrentUser(dataInfo.user);
-  //         setUpdateUserMessege('Данные успешно редактированы');
-  //       } else {
-  //         setUpdateUserMessege('Произошла ошибка');
-  //       }
-  //     }).catch((err) => {
-  //     setUpdateUserMessege('Произошла ошибка');
-  //     console.log(err);
-  //   })
-  // }
+  function handlerUpdateUser(data) {
+    mainApi.setUserInfo(data)
+      .then((dataInfo) => {
+        if (dataInfo) {
+          setCurrentUser(dataInfo.user);
+          setUpdateUserMessage('Данные успешно редактированы');
+        } else {
+          setUpdateUserMessage('Произошла ошибка');
+        }
+      }).catch((err) => {
+      setUpdateUserMessage('Произошла ошибка');
+      console.log(err);
+    })
+  }
 
   function signOut() {
       localStorage.removeItem('token');
@@ -178,30 +178,16 @@ function App() {
       });
   }
 
-  // редактирование профиля
-  function handlerUpdateUser(data) {
-    mainApi.saveProfile(data)
-      .then((profile) => {
-        setCurrentUser(profile);
-        setUpdateUserMessage('Профиль успешно обновлен');
-      }).catch((err) => {
-      setUpdateUserMessage('Произошла ошибка');
-      console.log(err);
-    })
-  }
-
-  // function signOut() {
-  //   localStorage.removeItem('token');
-  //   localStorage.removeItem('currentUser');
-  //   setLoggedIn(false);
-  //   setCurrentUser({})
-  //   localStorage.removeItem('initialMovies');
-  //   localStorage.removeItem('savedMovies');
-  //   setInitialMovies([]);
-  //   setSavedMovies([]);
-  //   setMoviesCards([]);
-  //   setFilterSavedMovies([]);
-  //   history.push('/');
+  // // редактирование профиля
+  // function handlerUpdateUser(data) {
+  //   mainApi.saveProfile(data)
+  //     .then((profile) => {
+  //       setCurrentUser(profile);
+  //       setUpdateUserMessage('Профиль успешно обновлен');
+  //     }).catch((err) => {
+  //     setUpdateUserMessage('Произошла ошибка');
+  //     console.log(err);
+  //   })
   // }
 
   function handlerNavVisible() {
