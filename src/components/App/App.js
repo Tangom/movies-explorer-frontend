@@ -127,7 +127,6 @@ function App() {
       });
   }
 
-
   function handlerNavVisible() {
     if (loggedIn) {
       setIsNavVisible(false);
@@ -306,7 +305,7 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <Header visible={isNavVisible} onNavOpen={handlerNavOpen}/>
+        <Header visible={isNavVisible} onNavOpen={handlerNavOpen} loggedIn={loggedIn} />
         <Navigation visible={isNavVisible} navOpen={isNavOpen} navClose={handlerNAvClose}/>
 
         <Switch>

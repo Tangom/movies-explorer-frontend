@@ -11,7 +11,7 @@ function Header(props) {
   });
 
   function handleHeaderType() {
-    if (location.pathname === '/') {
+    if (location.pathname === '/'&& !props.loggedIn) {
       isHeaderType({
         headerVisible: true,
         buttonVisible: true,
