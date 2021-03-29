@@ -6,29 +6,30 @@ function Profile({ signOut, onUpdateUser, ...props }) {
 
   const currentUser = React.useContext(CurrentUserContext);
 
-  // React.useEffect(() => {
-  //   setInputValue({
-  //     ...inputValue,
-  //     name: currentUser.name || '',
-  //     email: currentUser.email || ''
-  //   })
-  // }, [currentUser]);
-  //значения инпутов
+  React.useEffect(() => {
+    setInputValue({
+      ...inputValue,
+      name: currentUser.name || '',
+      email: currentUser.email || ''
+    })
+  }, [currentUser]);
+
+
   const [inputValue, setInputValue] = React.useState({
     name: '',
     email: '',
   });
-  // наличие ошибки при вводе данных
+
   const [inputError, setInputError] = React.useState({
     name: true,
     email: true,
   });
-  //состояние посещения инпута
+
   const [inputDirty, setInputDirty] = React.useState({
     name: false,
     email: false,
   });
-  //валидность формы
+
   const [isValid, setIsValid] = React.useState(true);
 
   function blurHandler(e) {
@@ -41,7 +42,7 @@ function Profile({ signOut, onUpdateUser, ...props }) {
         console.log('Не соответствует ни одному из вариантов')
     }
   };
-  // проверка валидность всей формы
+
   React.useEffect(() => {
     if (
       !inputError.name &&
@@ -53,13 +54,13 @@ function Profile({ signOut, onUpdateUser, ...props }) {
     }
   }, [inputError]);
 
-  //обработчик инпута имени
+
   function nameHandler(e) {
     setInputValue({ ...inputValue, name: e.target.value })
     setInputError({ ...inputError, name: e.target.value.length < 3 })
   };
 
-  //обработчик инпута email
+
   function emailHandler(e) {
     setInputValue({ ...inputValue, email: e.target.value })
     const reg = /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i

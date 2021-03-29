@@ -33,57 +33,6 @@ function App() {
   const [query, setQuery] = React.useState('');
   const [updateUserMessage, setUpdateUserMessage] = React.useState('');
 
-
-  // React.useEffect(() => {
-  //   if (localStorage.getItem('token') !== null) {
-  //     Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
-  //       .then(([userData, saveMoviesCards]) => {
-  //         setCurrentUser(userData);
-  //         setSavedMovies(saveMoviesCards);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       })
-  //   }
-  // }, []);
-
-
-  // function handlerLogin() {
-  //   const token = localStorage.getItem('token');
-  //   if (token !== null) {
-  //     mainApi.getToken(token)
-  //       .then((data) => {
-  //         if (data) {
-  //           setCurrentUser(data);
-  //           setLoggedIn(true);
-  //           history.push('/movies');
-  //         }
-  //       }).catch((err) => {
-  //       console.log(err);
-  //       signOut();
-  //     })
-  //   } else signOut();
-  // }
-
-  // сохранение токена для повторного входа
-  // React.useEffect(() => {
-  //   handlerLogin();
-  // }, [loggedIn]);
-
-  //
-  // function submitLogin(data) {
-  //   mainApi.login(data).then((data) => {
-  //     if (data) {
-  //       handlerLogin();
-  //       setCurrentUser(data);
-  //       history.push('/');
-  //     }
-  //   })
-  //     .catch(err => {
-  //       console.log(err);
-  //     })
-  // }
-  //
   function handlerUpdateUser(data) {
     mainApi.setUserInfo(data)
       .then((dataInfo) => {
@@ -100,10 +49,10 @@ function App() {
   }
 
   function signOut() {
-      localStorage.removeItem('token');
-      localStorage.removeItem('currentUser');
-      setLoggedIn(false);
-      setCurrentUser({})
+    localStorage.removeItem('token');
+    localStorage.removeItem('currentUser');
+    setLoggedIn(false);
+    setCurrentUser({})
     history.push('/');
   }
 
@@ -177,18 +126,6 @@ function App() {
         console.log(err);
       });
   }
-
-  // // редактирование профиля
-  // function handlerUpdateUser(data) {
-  //   mainApi.saveProfile(data)
-  //     .then((profile) => {
-  //       setCurrentUser(profile);
-  //       setUpdateUserMessage('Профиль успешно обновлен');
-  //     }).catch((err) => {
-  //     setUpdateUserMessage('Произошла ошибка');
-  //     console.log(err);
-  //   })
-  // }
 
   function handlerNavVisible() {
     if (location.pathname === '/movies'

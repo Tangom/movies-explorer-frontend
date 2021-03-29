@@ -77,21 +77,6 @@ class MainApi {
     }))
   }
 
-// saveProfile(data) {
-//     const token = localStorage.getItem('token');
-//     return this._getResponseData(fetch(`${this._url}/users/me`, {
-//       method: 'PATCH',
-//       headers: {
-//         ...this._headers,
-//         "Authorization" : `Bearer ${token}`
-//       },
-//       body: JSON.stringify({
-//         name: data.name,
-//         email: data.email
-//       })
-//     }))
-//   }
-
   getMovies() {
     const token = localStorage.getItem('token');
     return this._getResponseData(fetch(`${this._url}/movies`, {
