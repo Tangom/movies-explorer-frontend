@@ -1,8 +1,7 @@
 import MoviesCard from "../MoviesCard/MoviesCard";
 
 function MoviesCardList({moviesCard, renderMovies, onSaveMovie, deleteMovieCard, onBookmarkClick}) {
-  renderMovies = moviesCard.slice(0, 12)
-    .map((item) =>
+  renderMovies.map((item) =>
       (<li>
         <MoviesCard
           key={item.id}
