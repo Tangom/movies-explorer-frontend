@@ -45,14 +45,14 @@ function Profile(onUpdateUser, signOut, ...props) {
     const {name, value} = evt.target;
     setInputValue({...inputValue, [name]: value})
     setInputError({...inputError, [name]: value.length < 2})
-  };
+  }
 
   function handleEmail(evt) {
     const {email, value} = evt.target;
     setInputValue({...inputValue, [email]: value})
     const eml = /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i
     setInputError({...inputError, [email]: !eml.test(value)})
-  };
+  }
 
   React.useEffect(() => {
     if (
