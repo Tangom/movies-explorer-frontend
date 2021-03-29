@@ -13,7 +13,23 @@ function Profile(onUpdateUser, signOut, ...props) {
     email: true,
   });
 
+  const [inputDirty, setInputDirty] = React.useState({
+    name: false,
+    email: false,
+  });
+
   const [isValid, setIsValid] = React.useState(true);
+
+  function blurHandler(evt) {
+    switch (evt.target.name) {
+      case 'name':
+        return setInputDirty({...inputDirty, name: true})
+      case 'email':
+        return setInputDirty({...inputDirty, email: true})
+      default:
+        console.log('Не соответствует ни одному из вариантов')
+    }
+  }
 
   const currentUser = React.useContext(CurrentUserContext);
 
@@ -36,62 +52,59 @@ function Profile(onUpdateUser, signOut, ...props) {
     }
   }, [inputError]);
 
+
+  function handleName(evt) {
+    setInputValue({...inputValue, name: evt.target.value})
+    setInputError({...inputError, name: evt.target.value.length < 2})
+  };
+
+  function handleEmail(evt) {
+    setInputValue({...inputValue, email: evt.target.value})
+    const reg = /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i
+    setInputError({...inputError, email: !reg.test(evt.target.value)})
+  };
+
   function handleOnSubmit(evt) {
     evt.preventDefault();
     onUpdateUser(inputValue);
-  }
-
-  function handleName(evt) {
-    const {name, value} = evt.target;
-    setInputValue({...inputValue, [name]: value})
-    setInputError({...inputError, [name]: value.length < 2})
-  }
-
-  function handleEmail(evt) {
-    const {email, value} = evt.target;
-    setInputValue({...inputValue, [email]: value})
-    const eml = /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i
-    setInputError({...inputError, [email]: !eml.test(value)})
-  }
-
-  React.useEffect(() => {
-    if (
-      !inputError.name &&
-      !inputError.email
-    ) {
-      setIsValid(false)
-    } else {
-      setIsValid(true)
-    }
-  }, [inputError]);
+  };
 
   return (
     <section className="profile">
       <h1 className="profile__title">Привет, {currentUser.name}!</h1>
-      <form className="profile__form" action="post" name="profile" noValidate onSubmit={handleOnSubmit}>
+      <form className="profile__form" name="profile" noValidate onSubmit={handleOnSubmit}>
         <label className="profile__label">Имя
           <input className="profile__input" type="text" minLength="2" maxLength="30" required
-                 style={{color: inputError.name ? 'red' : 'white'}}
-                 value={inputValue.name} onChange={(evt) => {
-            handleName(evt)
-          }}/>
+                 style={{color: inputDirty.name && inputError.name ? 'red' : 'white'}}
+                 value={inputValue.name}
+                 onBlur={(evt) => {
+                   blurHandler(evt)
+                 }}
+                 onChange={(evt) => {
+                   handleName(evt)
+                 }}
+          />
         </label>
         <span
-          className={`profile__error ${inputError.name &&'profile__error_visible'}`}>
+          className={`profile__error ${inputDirty.name && inputError.name && 'profile__error_visible'}`}>
                     Имя заполнено некорректно
-                </span>
+        </span>
         <div className="profile__line"/>
         <label className="profile__label">Почта
           <input className="profile__input" type="Email" minLength="6" maxLength="40" required value={inputValue.email}
-                 style={{color: inputError.name ? 'red' : 'white'}}
+                 style={{color: inputDirty.email && inputError.email ? 'red' : 'white'}}
+                 onBlur={(evt) => {
+                   blurHandler(evt)
+                 }}
                  onChange={(evt) => {
                    handleEmail(evt)
-                 }}/>
+                 }}
+          />
         </label>
         <span
-          className={`profile__error ${inputError.email &&'profile__error_visible'}`}>
+          className={`profile__error ${inputDirty.email && inputError.email && 'profile__error_visible'}`}>
                     Поле Email заполнено некорректно
-                    </span>
+        </span>
         <div className="profile__button-zone">
                     <span className="profile__error profile__error_visible">{props.message}
                     </span>
@@ -99,7 +112,7 @@ function Profile(onUpdateUser, signOut, ...props) {
                   disabled={isValid}>>
             Редактировать
           </button>
-          <button className="profile__button profile__button_color" onClick={signOut}>
+          <button type="button" className="profile__button profile__button_color" onClick={signOut}>
             Выйти из аккаунта
           </button>
         </div>
