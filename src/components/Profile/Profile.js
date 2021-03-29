@@ -2,7 +2,7 @@ import React from 'react';
 import {CurrentUserContext} from '../../context/CurrentUserContext';
 import cn from 'classnames';
 
-function Profile(onUpdateUser, signOut, ...props) {
+function Profile(onUpdateUser, signOut, message) {
 
   const [inputValue, setInputValue] = React.useState({
     name: '',
@@ -57,18 +57,18 @@ function Profile(onUpdateUser, signOut, ...props) {
   function handleName(evt) {
     setInputValue({...inputValue, name: evt.target.value})
     setInputError({...inputError, name: evt.target.value.length < 2})
-  };
+  }
 
   function handleEmail(evt) {
     setInputValue({...inputValue, email: evt.target.value})
     const reg = /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i
     setInputError({...inputError, email: !reg.test(evt.target.value)})
-  };
+  }
 
   function handleOnSubmit(evt) {
     evt.preventDefault();
     onUpdateUser(inputValue);
-  };
+  }
 
   return (
     <section className="profile">
@@ -101,7 +101,7 @@ function Profile(onUpdateUser, signOut, ...props) {
                     Поле Email заполнено некорректно
         </span>
         <div className="profile__button-zone">
-                    <span className="profile__error profile__error_visible">{props.message}
+                    <span className="profile__error profile__error_visible">{message}
                     </span>
           <button type="submit" className={cn('profile__button', {'profile__button_disabled': isValid})}
                   disabled={isValid}>>
