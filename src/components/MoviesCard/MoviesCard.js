@@ -1,7 +1,7 @@
 import React from 'react';
 import {useLocation} from "react-router";
 
-function MoviesCard({savedMovies, movie, onBookmarkClick, isSavedMovie}) {
+function MoviesCard({movie, onBookmarkClick, isSavedMovie}) {
   const location = useLocation();
   const {nameRU, duration, trailer, image} = movie;
   const isSaved = isSavedMovie(movie);

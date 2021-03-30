@@ -330,7 +330,6 @@ function App() {
                           loggedIn={loggedIn}
                           isLoading={isLoading}
                           component={Movies}
-                          savedMovies={false}
                           movies={moviesCards}
                           loadingError={loadingError}
                           onSubmitSearch={onSubmitSearch}
@@ -342,7 +341,6 @@ function App() {
                           loggedIn={loggedIn}
                           isLoading={isLoading}
                           component={Movies}
-                          savedMovies={true}
                           movies={filterSavedMovies}
                           loadingError={loadingError}
                           onSubmitSearch={onSubmitSearchSaved}

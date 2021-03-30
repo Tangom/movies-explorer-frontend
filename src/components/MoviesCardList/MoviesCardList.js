@@ -1,7 +1,7 @@
 import MoviesCard from "../MoviesCard/MoviesCard";
 import React from "react";
 
-function MoviesCardList({savedMovies, movies, onBookmarkClick, isSavedMovie}) {
+function MoviesCardList({movies, onBookmarkClick, isSavedMovie}) {
 
   const [extraPortion, setExtraPortion] = React.useState(3);
   const [currentCount, setCurrenCount] = React.useState(0);
@@ -52,7 +52,6 @@ function MoviesCardList({savedMovies, movies, onBookmarkClick, isSavedMovie}) {
         {
           renderMovies.map((movie) => (
             <MoviesCard
-              savedMovies={savedMovies}
               key={movie.id}
               movie={movie}
               onBookmarkClick={onBookmarkClick}
