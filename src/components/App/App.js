@@ -56,8 +56,7 @@ function App() {
     history.push('/');
   }
 
-  React.useEffect(() => {
-    const path = location.pathname;
+  function handlerLogin() {
     const token = localStorage.getItem('token');
     if (token) {
       mainApi.checkToken(token)
@@ -65,16 +64,18 @@ function App() {
           if (res) {
             setLoggedIn(true);
             getCurrentUser();
-            history.push(path);
+            history.push('/movies');
           }
-        })
-        .catch((err) => {
+        }).catch((err) => {
           console.log(err);
-          localStorage.removeItem('token')
-          history.push('/');
-        });
-    }
-  }, []);
+          signOut();
+        })
+    } else signOut();
+  }
+
+  React.useEffect(() => {
+    handlerLogin();
+  }, [loggedIn]);
 
   function onRegister({name, email, password}) {
     if (!name || !email || !password) {
