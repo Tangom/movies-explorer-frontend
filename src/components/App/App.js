@@ -344,7 +344,8 @@ function App() {
                           loadingError={loadingError}
                           onSubmitSearch={onSubmitSearchSaved}
                           onBookmarkClick={onBookmarkClick}
-                          isSavedMovie={isSavedMovie}          />
+                          isSavedMovie={isSavedMovie}
+          />
 
           <Route path="*">
             <PageNotFound/>
