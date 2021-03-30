@@ -1,15 +1,15 @@
 import React from 'react';
 import {useLocation} from "react-router";
 
-function MoviesCard({savedMovies, movie, onBookmarkClick, isSavedMovie }) {
+function MoviesCard({savedMovies, movie, onBookmarkClick, isSavedMovie}) {
   const location = useLocation();
-  const { nameRU, duration, trailer, image } = movie;
+  const {nameRU, duration, trailer, image} = movie;
   const isSaved = isSavedMovie(movie);
 
   function durationFormat(duration) {
     const hh = Math.trunc(duration / 60)
     const mm = duration % 60;
-    return `${hh>0 ? hh+'ч ' : ''}${mm}м`
+    return `${hh > 0 ? hh + 'ч ' : ''}${mm}м`
   }
 
   function handleOnClick(evt) {

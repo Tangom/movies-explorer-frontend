@@ -68,9 +68,9 @@ function App() {
             history.push('/movies');
           }
         }).catch((err) => {
-          console.log(err);
-          signOut();
-        })
+        console.log(err);
+        signOut();
+      })
     } else signOut();
   }
 
@@ -132,7 +132,10 @@ function App() {
   function handlerNavVisible() {
     if (loggedIn) {
       setIsNavVisible(false);
-    } else { setIsNavVisible(true) };
+    } else {
+      setIsNavVisible(true)
+    }
+    ;
   }
 
   function handlerFootVisible() {
@@ -158,7 +161,7 @@ function App() {
     setIsNavOpen(false);
   }
 
-  const  addMovie = (data) => {
+  const addMovie = (data) => {
     setIsLoading(true);
     mainApi.createMovie(data)
       .then((res) => {
@@ -182,12 +185,12 @@ function App() {
     mainApi.deleteMovies(movieId)
       .then((res) => {
         if (res) {
-          const newArray = savedMovies.filter((item) => item.movieId!== res.movieId);
+          const newArray = savedMovies.filter((item) => item.movieId !== res.movieId);
           setSavedMovies(newArray);
         }
       }).catch(err => {
-        console.log(err);
-      })
+      console.log(err);
+    })
       .finally(() => {
         setIsLoading(false);
       });
@@ -299,7 +302,7 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <Header visible={isNavVisible} onNavOpen={handlerNavOpen} loggedIn={loggedIn} />
+        <Header visible={isNavVisible} onNavOpen={handlerNavOpen} loggedIn={loggedIn}/>
         <Navigation visible={isNavVisible} navOpen={isNavOpen} navClose={handlerNAvClose}/>
 
         <Switch>

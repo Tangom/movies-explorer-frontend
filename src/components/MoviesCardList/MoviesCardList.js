@@ -1,14 +1,14 @@
 import MoviesCard from "../MoviesCard/MoviesCard";
 import React from "react";
 
-function MoviesCardList({ savedMovies, movies, onBookmarkClick, isSavedMovie}) {
+function MoviesCardList({savedMovies, movies, onBookmarkClick, isSavedMovie}) {
 
   const [extraPortion, setExtraPortion] = React.useState(3);
   const [currentCount, setCurrenCount] = React.useState(0);
   const [renderMovies, setRenderMovies] = React.useState([]);
 
   function getCount(windowSize) {
-    if (windowSize > 768 ) {
+    if (windowSize > 768) {
       return {first: 12, extra: 3}
     } else if (windowSize > 480 && windowSize <= 768) {
       return {first: 8, extra: 2}
@@ -18,8 +18,8 @@ function MoviesCardList({ savedMovies, movies, onBookmarkClick, isSavedMovie}) {
   }
 
   function renderPortion() {
-    const count = Math.min(movies.length,currentCount+extraPortion);
-    const extraMovies = movies.slice(currentCount,count)
+    const count = Math.min(movies.length, currentCount + extraPortion);
+    const extraMovies = movies.slice(currentCount, count)
     setRenderMovies([...renderMovies, ...extraMovies]);
     setCurrenCount(count);
   }
@@ -35,14 +35,14 @@ function MoviesCardList({ savedMovies, movies, onBookmarkClick, isSavedMovie}) {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  },[]);
+  }, []);
 
   React.useEffect(() => {
     const windowSize = window.innerWidth;
     const sizePortion = getCount(windowSize);
     setExtraPortion(sizePortion.extra);
-    const count = Math.min(movies.length,sizePortion.first);
-    setRenderMovies(movies.slice(0,count));
+    const count = Math.min(movies.length, sizePortion.first);
+    setRenderMovies(movies.slice(0, count));
     setCurrenCount(count);
   }, [movies])
 
@@ -61,7 +61,7 @@ function MoviesCardList({ savedMovies, movies, onBookmarkClick, isSavedMovie}) {
           ))
         }
       </section>
-      { currentCount < movies.length && <button className="cards__more" onClick={renderPortion}>Ещё</button> }
+      {currentCount < movies.length && <button className="cards__more" onClick={renderPortion}>Ещё</button>}
     </>
   );
 }
