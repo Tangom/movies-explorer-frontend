@@ -74,7 +74,7 @@ function App() {
           history.push('/');
         });
     }
-  }, [loggedIn]);
+  }, []);
 
   function onRegister({name, email, password}) {
     if (!name || !email || !password) {
