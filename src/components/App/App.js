@@ -191,10 +191,7 @@ function App() {
       }).catch(err => {
       console.log(err);
     })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
+   }
 
   function filter(data, query) {
     if (query) {
