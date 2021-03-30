@@ -21,6 +21,7 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [isLoading, setIsLoading] = React.useState(false);
+  const [loadingError, setLoadingError] = React.useState('');
 
   const [isNavVisible, setIsNavVisible] = React.useState(false);
   const [isFootVisible, setIsFootVisible] = React.useState(false);
@@ -133,15 +134,6 @@ function App() {
       setIsNavVisible(false);
     } else { setIsNavVisible(true) };
   }
-  // function handlerNavVisible() {
-  //   if (location.pathname === '/movies'
-  //     || location.pathname === '/saved-movies'
-  //     || location.pathname === '/profile') {
-  //     setIsNavVisible(false);
-  //   } else {
-  //     setIsNavVisible(true)
-  //   }
-  // }
 
   function handlerFootVisible() {
     if (location.pathname === '/movies'
@@ -166,7 +158,7 @@ function App() {
     setIsNavOpen(false);
   }
 
-  const savedMovie = (data) => {
+  const  addMovie = (data) => {
     setIsLoading(true);
     mainApi.createMovie(data)
       .then((res) => {
@@ -185,14 +177,15 @@ function App() {
     localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
   }, [savedMovies])
 
-  const deleteMovieCard = (movieId) => {
-    const id = savedMovies.find(item => item.movieId === movieId)._id;
-    setIsLoading(true);
-    mainApi.deleteMovies(id)
-      .then(() => {
-        setSavedMovies(savedMovies.filter(item => item._id !== id));
-      })
-      .catch(err => {
+  function deleteMovie(movie) {
+    const movieId = savedMovies.find((item) => item.id === movie.id)._id;
+    mainApi.deleteMovies(movieId)
+      .then((res) => {
+        if (res) {
+          const newArray = savedMovies.filter((item) => item.movieId!== res.movieId);
+          setSavedMovies(newArray);
+        }
+      }).catch(err => {
         console.log(err);
       })
       .finally(() => {
@@ -207,9 +200,9 @@ function App() {
         return regex.test(item.nameRU) || regex.test(item.nameEN);
       });
       if (filterData.length === 0) {
-        console.log('Ничего не найдено');
+        setLoadingError('Ничего не найдено');
       } else {
-        console.log('');
+        setLoadingError('');
       }
       return filterData;
     }
@@ -253,13 +246,13 @@ function App() {
 
   function onBookmarkClick(movie, isMarked) {
     if (isMarked) {
-      savedMovie(movie);
+      addMovie(movie);
     } else {
-      deleteMovieCard(movie);
+      deleteMovie(movie);
     }
   }
 
-  function onSaveMovie(movie) {
+  function isSavedMovie(movie) {
     return savedMovies.some((item) => item.id === movie.id)
   }
 
@@ -332,25 +325,26 @@ function App() {
 
           <ProtectedRoute path="/movies"
                           loggedIn={loggedIn}
-                          component={Movies}
-                          onSaveMovie={onSaveMovie}
-                          moviesCard={moviesCards}
                           isLoading={isLoading}
-                          submitSearch={onSubmitSearch}
+                          component={Movies}
+                          savedMovies={false}
+                          movies={moviesCards}
+                          loadingError={loadingError}
+                          onSubmitSearch={onSubmitSearch}
                           onBookmarkClick={onBookmarkClick}
-                          deleteMovieCard={deleteMovieCard}
+                          isSavedMovie={isSavedMovie}
           />
 
           <ProtectedRoute path="/saved-movies"
                           loggedIn={loggedIn}
-                          component={Movies}
-                          onSaveMovie={onSaveMovie}
-                          moviesCard={filterSavedMovies}
                           isLoading={isLoading}
-                          submitSearch={onSubmitSearchSaved}
+                          component={Movies}
+                          savedMovies={true}
+                          movies={filterSavedMovies}
+                          loadingError={loadingError}
+                          onSubmitSearch={onSubmitSearchSaved}
                           onBookmarkClick={onBookmarkClick}
-                          deleteMovieCard={deleteMovieCard}
-          />
+                          isSavedMovie={isSavedMovie}          />
 
           <Route path="*">
             <PageNotFound/>

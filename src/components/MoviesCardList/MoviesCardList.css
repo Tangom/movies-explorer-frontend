@@ -7,6 +7,21 @@
   gap: 30px 24px;
 }
 
+.cards__more {
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+  font-size: 12px;
+  cursor: pointer;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 15px;
+  width: 320px;
+  padding: 10px 0;
+  color: #fff;
+  border: 0.6px solid rgba(170, 170, 170, 0.2);
+  border-radius: 6px;
+  background: #202020;
+}
+
 .cards__not-found {
   font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
   font-size: 28px;

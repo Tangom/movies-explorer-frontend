@@ -7,18 +7,14 @@
     max-width: 1280px;
     padding: 70px 0 80px;
   }
-  .movies__more {
-    font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
-    font-size: 12px;
-    cursor: pointer;
-    font-weight: 500;
-    font-style: normal;
-    line-height: 15px;
-    width: 320px;
-    padding: 10px 0;
-    color: #fff;
-    border: 0.6px solid rgba(170, 170, 170, 0.2);
-    border-radius: 6px;
-    background: #202020;
-  }
+
+.movies__not-found {
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+  font-size: 28px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 30px;
+  margin: auto;
+}
+
   
